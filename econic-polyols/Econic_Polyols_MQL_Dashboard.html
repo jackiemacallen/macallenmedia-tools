@@ -123,7 +123,21 @@ tbody td{padding:9px 12px;vertical-align:middle}
 @media(max-width:700px){.metrics{grid-template-columns:repeat(2,1fr)}.contact-grid{grid-template-columns:1fr}.logic-grid{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
+<body><script>
+(function(){
+  var pwd = sessionStorage.getItem('mql_auth');
+  if (pwd !== 'econicmarketing2026!') {
+    pwd = prompt('Enter password to access this dashboard:');
+    if (pwd !== 'econicmarketing2026!') {
+      document.write('<div style="font-family:sans-serif;padding:40px;text-align:center"><h2>Access denied</h2><p>Incorrect password. Please reload and try again.</p></div>');
+      document.close();
+      return;
+    }
+    sessionStorage.setItem('mql_auth', pwd);
+  }
+})();
+</script>
+
 <div class="shell">
 
 
