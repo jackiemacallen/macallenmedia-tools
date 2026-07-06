@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Econic Technologies — Surfactants MQL Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#F58D1F;--orange-light:#FEF3E2;--orange-border:#FAC97A;
+  --green-dark:#1F4E36;--green-mid:#2D7A50;--green-light:#E8F5E9;--green-border:#A8D5B5;
+  --yellow-bg:#FFF9C4;--yellow-border:#F0D060;--yellow-text:#7A6000;
+  --blue-bg:#E3F2FD;--blue-border:#90CAF9;--blue-text:#0C447C;
+  --grey-100:#F8F8F6;--grey-200:#EFEFEC;--grey-300:#D8D8D3;
+  --grey-500:#888880;--grey-800:#2C2C2A;--white:#FFFFFF;
+  --font-head:"Space Grotesk","Microsoft Sans Serif",sans-serif;
+  --font-mono:"Space Mono",monospace;
+  --r-sm:4px;--r-md:8px;--r-lg:12px;
+}
+body{font-family:var(--font-head);background:var(--grey-100);color:var(--grey-800);font-size:14px;line-height:1.5}
+.shell{max-width:1200px;margin:0 auto;padding:32px 24px 64px}
+.header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;gap:16px;flex-wrap:wrap}
+.header-left h1{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--grey-500);margin-bottom:4px}
+.header-left h2{font-size:26px;font-weight:700;letter-spacing:-.02em;color:#000;line-height:1.1}
+.header-left .subtitle{font-size:13px;color:var(--grey-500);margin-top:4px}
+.header-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toggle-wrap{display:flex;background:var(--white);border:1px solid var(--grey-300);border-radius:40px;padding:3px;gap:2px}
+.toggle-btn{font-family:var(--font-head);font-size:12px;font-weight:600;letter-spacing:.04em;padding:6px 14px;border-radius:40px;border:none;cursor:pointer;background:transparent;color:var(--grey-500);transition:all .18s}
+.toggle-btn.active{background:var(--orange);color:var(--white)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.metric-card{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--r-lg);padding:16px 20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column}
+.metric-card .label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-500);margin-bottom:6px;min-height:28px;display:flex;align-items:flex-end}
+.metric-card .value{font-size:32px;font-weight:700;color:var(--orange);line-height:1;font-variant-numeric:tabular-nums}
+.metric-card .sub{font-size:11px;color:var(--grey-500);margin-top:4px}
+.metric-delta{margin-top:8px}
+.mql-title-wrap{display:inline-flex;align-items:center;gap:6px}
+.mql-help{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--grey-300);color:var(--grey-500);font-size:10px;font-weight:700;cursor:help;flex-shrink:0;vertical-align:middle}
+.delta-pill{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.delta-up{background:var(--green-light);color:var(--green-dark)}
+.delta-down{background:#FCEBEB;color:#A32D2D}
+.delta-flat{background:var(--grey-200);color:var(--grey-500)}
+.section-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--grey-500);margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:"";flex:1;height:1px;background:var(--grey-200)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--grey-500)}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dot-email{background:#1D9E75}.dot-form{background:#378ADD}.dot-both{background:var(--orange)}.dot-none{background:var(--grey-300)}
+.table-wrap{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--r-lg);overflow:visible;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:4px}
+.table-wrap table{border-radius:var(--r-lg);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--orange)}
+thead th{color:rgba(255,255,255,.9);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 12px;text-align:left;white-space:nowrap}
+thead th:not(:first-child){text-align:center}
+tbody tr{border-bottom:1px solid var(--grey-200);transition:background .12s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--grey-100)}
+tbody td{padding:9px 12px;vertical-align:middle}
+.company-name{font-weight:600;color:var(--grey-800)}
+.contact-count{font-family:var(--font-mono);font-size:12px;color:var(--grey-500);text-align:center}
+.sig{display:inline-block;width:10px;height:10px;border-radius:50%}
+.score-wrap{display:flex;align-items:center;gap:6px}
+.score-bar-bg{flex:1;height:5px;background:var(--grey-200);border-radius:3px;overflow:hidden;min-width:40px}
+.score-bar-fill{height:100%;background:var(--orange);border-radius:3px}
+.score-num{font-family:var(--font-mono);font-size:11px;color:var(--grey-500);min-width:16px;text-align:right}
+.tooltip-icon{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.25);color:rgba(255,255,255,.9);font-size:9px;font-weight:700;cursor:help;flex-shrink:0;margin-left:4px;vertical-align:middle}
+#global-tooltip{position:fixed;background:var(--grey-800);color:var(--white);font-size:11px;font-weight:400;white-space:nowrap;padding:5px 10px;border-radius:var(--r-sm);pointer-events:none;opacity:0;transition:opacity .15s;z-index:9999;line-height:1.4}
+#global-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--grey-800)}
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.contact-card{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--r-lg);padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:box-shadow .15s,transform .15s}
+.contact-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);transform:translateY(-1px)}
+.contact-card.ext-card{border-left:3px solid var(--yellow-border)}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--orange-light);color:var(--orange);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;letter-spacing:.02em}
+.avatar.ext{background:var(--yellow-bg);color:var(--yellow-text)}
+.contact-info{flex:1;min-width:0}
+.contact-name{font-weight:700;font-size:13px;color:var(--grey-800);margin-bottom:1px}
+.contact-title{font-size:11px;color:var(--grey-500);margin-bottom:1px;line-height:1.3}
+.contact-company{font-size:12px;color:var(--grey-800);font-weight:600;margin-bottom:1px}
+.contact-email{font-size:11px;color:var(--blue-text);font-family:var(--font-mono);margin-bottom:2px}
+.contact-lasttouch{font-size:11px;color:var(--grey-500);margin-bottom:5px}
+.contact-lasttouch strong{color:var(--grey-800)}
+.badges{display:flex;flex-wrap:wrap;gap:4px}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.badge-click{background:var(--green-light);color:var(--green-dark)}
+.badge-form{background:var(--blue-bg);color:var(--blue-text)}
+.badge-both{background:var(--orange-light);color:var(--orange)}
+.badge-repeat{background:var(--yellow-bg);color:var(--yellow-text)}
+.badge-note{background:var(--grey-200);color:var(--grey-500)}
+.badge-form-wrap{position:relative;display:inline-block}
+.badge-email-wrap{position:relative;display:inline-block}
+.badge-email-wrap .email-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--grey-800);color:var(--white);font-size:11px;font-weight:400;white-space:nowrap;padding:5px 10px;border-radius:var(--r-sm);pointer-events:none;opacity:0;transition:opacity .15s,transform .15s;z-index:20;line-height:1.4}
+.badge-email-wrap .email-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--grey-800)}
+.badge-email-wrap:hover .email-tooltip{opacity:1;transform:translateX(-50%) translateY(0)}
+.status-pills{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.status-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;letter-spacing:.04em;padding:3px 9px;border-radius:20px;border:1.5px solid var(--grey-300);color:var(--grey-500);background:var(--white);cursor:pointer;transition:all .15s;white-space:nowrap;font-family:var(--font-head)}
+.status-pill:hover{border-color:var(--grey-400);color:var(--grey-800)}
+.status-pill.active-emailed{background:#E8F5E9;border-color:#1F4E36;color:#1F4E36}
+.status-pill.active-not-relevant{background:#FEF3E2;border-color:var(--orange);color:var(--orange)}
+.status-pill.active-in-convo{background:#EEF4FF;border-color:#3B5FC0;color:#3B5FC0}
+.outreach-summary{font-size:11px;color:var(--grey-500);margin-bottom:12px;font-style:italic}
+.archive-footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--grey-200);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.archive-footer-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--grey-500)}
+.archive-link{font-size:12px;color:var(--blue-text);text-decoration:none;font-weight:500}
+.archive-link:hover{text-decoration:underline}
+.badge-form-wrap .form-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--grey-800);color:var(--white);font-size:11px;font-weight:400;white-space:nowrap;padding:5px 10px;border-radius:var(--r-sm);pointer-events:none;opacity:0;transition:opacity .15s,transform .15s;z-index:20;line-height:1.4}
+.badge-form-wrap .form-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--grey-800)}
+.badge-form-wrap:hover .form-tooltip{opacity:1;transform:translateX(-50%) translateY(0)}
+.logic-panel{background:var(--white);border:1px solid var(--grey-200);border-radius:var(--r-lg);padding:16px 20px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.logic-panel h3{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-500);margin-bottom:12px}
+.logic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.logic-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--grey-100);border-radius:var(--r-md)}
+.logic-pts{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--orange);min-width:32px}
+.logic-desc{font-size:12px;color:var(--grey-800)}
+.logic-desc strong{font-weight:600;display:block}
+.logic-desc span{color:var(--grey-500);font-size:11px}
+.update-panel{background:var(--green-dark);color:rgba(255,255,255,.85);border-radius:var(--r-lg);padding:20px 24px;margin-top:24px}
+.update-panel h3{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px}
+.update-panel ol{padding-left:20px;font-size:13px;line-height:1.8}
+.update-panel code{font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,.12);padding:1px 5px;border-radius:3px;color:#A8D5B5}
+.footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--grey-200);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.footer-left,.footer-right{font-size:11px;color:var(--grey-500)}
+.flag-badge{display:inline-flex;align-items:center;gap:5px;background:var(--yellow-bg);color:var(--yellow-text);border:1px solid var(--yellow-border);border-radius:20px;font-size:10px;font-weight:600;padding:3px 8px;margin-left:6px}
+@media(max-width:700px){.metrics{grid-template-columns:repeat(2,1fr)}.contact-grid{grid-template-columns:1fr}.logic-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body><script>
+(function(){
+  var pwd = sessionStorage.getItem('mql_auth');
+  if (pwd !== 'econicmarketing2026!') {
+    pwd = prompt('Enter password to access this dashboard:');
+    if (pwd !== 'econicmarketing2026!') {
+      document.write('<div style="font-family:sans-serif;padding:40px;text-align:center"><h2>Access denied</h2><p>Incorrect password. Please reload and try again.</p></div>');
+      document.close();
+      return;
+    }
+    sessionStorage.setItem('mql_auth', pwd);
+  }
+})();
+</script>
+
+<div class="shell">
+
+
+<div class="header">
+  <div class="header-left">
+    <h1>Econic Technologies — Surfactants</h1>
+    <h2 class="mql-title-wrap">Surfactants Marketing Qualified Leads <span class="mql-help tooltip-icon" data-tip="A Marketing Qualified Lead (MQL) is a contact at a target account who has shown meaningful engagement with Econic content — such as clicking a campaign email, repeatedly opening our marketing emails, or downloading a gated resource — signalling above-average interest that warrants sales follow-up.">?</span></h2>
+    <div class="subtitle">Target company engagement signals</div>
+  </div>
+  <div class="header-right">
+    <div class="toggle-wrap">
+      <button class="toggle-btn active" data-view="month" onclick="setView('month')">New in May 2026</button>
+      <button class="toggle-btn" data-view="cumulative" onclick="setView('cumulative')">YTD</button>
+    </div>
+  </div>
+</div>
+
+<div class="metrics">
+  <div class="metric-card">
+    <div class="label">Target company MQLs</div>
+    <div class="value" id="metric-target">—</div>
+    <div class="sub" id="metric-sub-target">Simon's target list</div>
+    <div class="metric-delta" id="delta-target"></div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Additional MQLs</div>
+    <div class="value" id="metric-ext">—</div>
+    <div class="sub" id="metric-sub-ext">Extended industry list</div>
+    <div class="metric-delta" id="delta-ext"></div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Email clicks</div>
+    <div class="value" id="metric-clicks">—</div>
+    <div class="sub">Strongest intent signal</div>
+    <div class="metric-delta" id="delta-clicks"></div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Web form downloads</div>
+    <div class="value" id="metric-forms">—</div>
+    <div class="sub">Gated content submissions</div>
+    <div class="metric-delta" id="delta-forms"></div>
+  </div>
+</div>
+
+<div class="section-title">Signals from target surfactants companies</div>
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot dot-email"></span>Email engagement</div>
+  <div class="legend-item"><span class="legend-dot dot-form"></span>Web form download</div>
+  <div class="legend-item"><span class="legend-dot dot-none"></span>No signal</div>
+  <div class="legend-item" style="margin-left:auto;font-size:11px;color:var(--yellow-text)">&#9873; = extended list</div>
+</div>
+<div class="table-wrap">
+  <table><thead id="heatmap-thead"></thead><tbody id="heatmap-tbody"></tbody></table>
+</div>
+<div style="text-align:center;margin:8px 0 4px">
+  <button id="heatmap-showmore" style="display:none;font-family:var(--font-head);font-size:12px;font-weight:600;color:var(--orange);background:none;border:none;cursor:pointer;padding:6px 12px;letter-spacing:.04em">Show all companies ▼</button>
+</div>
+
+<div id="outreach-summary" class="outreach-summary"></div>
+<div class="section-title">Priority outreach — Simon's target list</div>
+<div class="contact-grid" id="contact-grid-target"></div>
+
+<div id="ext-section">
+  <div class="section-title">Additional outreach — extended industry list</div>
+  <div class="contact-grid" id="contact-grid-ext"></div>
+</div>
+
+<div class="section-title">Scoring logic</div>
+<div class="logic-panel">
+  <h3>How engagement scores are calculated</h3>
+  <div class="logic-grid">
+    <div class="logic-item"><div class="logic-pts">+4</div><div class="logic-desc"><strong>Web form download</strong><span>Submitted email to access gated content</span></div></div>
+    <div class="logic-item"><div class="logic-pts">+3</div><div class="logic-desc"><strong>Email click (×clicks)</strong><span>Clicked a link in any campaign email</span></div></div>
+    <div class="logic-item"><div class="logic-pts">+2</div><div class="logic-desc"><strong>Repeat email opens</strong><span>Opened the same email more than once</span></div></div>
+    <div class="logic-item"><div class="logic-pts">+2</div><div class="logic-desc"><strong>Multi-campaign bonus</strong><span>Opened 2+ campaigns AND clicked at least once</span></div></div>
+  </div>
+</div>
+
+<div class="update-panel" id="update-panel" style="display:none">
+  <h3>How to update this dashboard monthly</h3>
+  <ol>
+    <li>Update <code>REPORT_PERIOD</code> and <code>CURRENT_MONTH</code> at top of script</li>
+    <li>Add new campaign to <code>CAMPAIGNS</code> object</li>
+    <li>For each contact with new engagement, add a row to their <code>engagements</code> array — do not delete old rows</li>
+    <li>For new web form subscribers, add a new contact block with <code>web_form: true</code> in their engagement</li>
+    <li>Save and reload — everything recalculates automatically</li>
+  </ol>
+</div>
+
+<div class="footer">
+  <div class="archive-footer">
+  <span class="archive-footer-label">Archive</span>
+  <span style="font-size:11px;color:var(--grey-400)">Previous months will appear here — add links as you publish each archive.</span>
+  <!-- Example: <a class="archive-link" href="Econic_Surfactants_MQL_Dashboard_May2026.html">May 2026</a> -->
+</div>
+
+<div class="footer-left">MMPA for Econic Technologies Ltd &middot; Surfactants MQL Dashboard &middot; <span id="footer-date"></span></div>
+  <div class="footer-right">Confidential</div>
+</div>
+
+<script>
+document.getElementById("footer-date").textContent = "Updated " + new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+if (new URLSearchParams(window.location.search).get("admin")==="true") {
+  document.getElementById("update-panel").style.display="block";
+}
+</script>
+</div>
+<script>
+// ════════════════════════════════════════════════════════════
+//  CONFIG — update these each month
+// ════════════════════════════════════════════════════════════
+// ── Google Apps Script endpoint (paste your deployed URL here) ──────────
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR-IxJpC3qvbpalA58nN6SpVjuO6F0z-RI8NJ_-Bl2iEjQIbsPUivky4cj8dV0Na6u/exec";
+const DASHBOARD_ID    = "econic-surfactants";  // unique ID per dashboard
+
+const REPORT_PERIOD  = "May 2026";
+const CURRENT_MONTH  = "2026-05";
+const PREV_MONTH     = "2026-04";
+
+// Scoring weights
+const SCORE = {
+  web_form: 4,
+  email_click_each: 3,
+  repeat_opens: 2,
+  multi_campaign_bonus: 2,
+};
+
+// Campaign registry — add new campaigns each month
+// month = actual send month (not export date)
+const CAMPAIGNS = {
+  surf_mar:    {label:"Surfactants March",   month:"2026-03"},
+  surf_apr:    {label:"Surfactants April",   month:"2026-04"},
+  surf_apr_r:  {label:"Surf. April (resend)",month:"2026-04"},
+  changhua:    {label:"Changhua Press Release",month:"2026-04"},
+  changhua_r:  {label:"Changhua (resend)",   month:"2026-04"},
+  polyols_mar: {label:"Polyols March",       month:"2026-03"},
+  polyols_r:   {label:"Polyols March (resend)",month:"2026-03"},
+  surf_may:    {label:"Surfactants May",       month:"2026-05"},
+};
+
+// Company status: "target" = Simon's list (green), "extended" = industry-relevant (yellow)
+const COMPANIES = {
+  "BASF":"target","Evonik":"target","Croda":"target","Clariant":"target",
+  "Unilever":"target","Nouryon":"target","Christeyns":"target","Sasol":"target",
+  "KLK Oleo":"target","Arkema":"target","Altana":"target","Dow Chemical":"target",
+  "Syensqo":"target","Rossari Biotech":"target","RSPO":"target",
+  "CO2 Value Europe":"target","Henkel":"target","Reckitt":"target","Stepan":"target",
+  "Aveda":"target","Petronas":"target","Innospec":"target","Lubrizol":"target",
+  "ICIS":"target","Zschimmer & Schwarz":"target","KAO":"target",
+  "Galaxy Surfactants":"target","Oleon":"target","Beiersdorf":"target",
+  "Ecolab":"target","Diversey":"target","Gojo":"target","Procter & Gamble":"target",
+  "Clorox":"target","Church & Dwight":"target","Amway":"target","Ecover":"target",
+  "Estee Lauder":"target","Kenvue":"target","Colgate Palmolive":"target",
+  // Extended
+  "PCC Rokita":"extended","Perstorp":"extended","Covestro":"extended",
+  "Huntsman":"extended","Mitsui Chemicals":"extended","Mitsui":"extended",
+  "LANXESS":"extended","Shell":"extended","TotalEnergies":"extended",
+  "PTT Global Chemical":"extended","ThyssenKrupp":"extended",
+  "COIM Group":"extended","Wacker":"extended",
+  "Azelis":"extended","Surfachem":"extended","Sherwin-Williams":"extended",
+  "Teknor Apex":"extended","Polymax International Canada":"extended",
+};
+
+const CONTACTS = [
+  {name:"Guillaume Jaunky",initials:"GJ",title:"Technical Director, BYK Additives & Instruments",company:"Altana",email:"guillaume.jaunky@altana.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Martin Schreiber",initials:"MS",title:"Research and Development Group Manager",company:"Altana",email:"martin.schreiber@altana.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:2,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Frank Cogordan",initials:"FC",title:"Development & Innovation Leader, Specialties and Industrial Coatings",company:"Arkema",email:"frank.cogordan@arkema.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Loïc Debergh",initials:"LD",title:"Project Director",company:"Arkema",email:"loic.debergh@arkema.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:3,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0}
+  ]},
+  {name:"Pierre Larnicol",initials:"PL",title:"Director – Global Marketing & Sustainable Offer, Acrylic Monomers",company:"Arkema",email:"pierre.larnicol@arkema.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Nathan Keen",initials:"NK",title:"Principal Scientist",company:"Aveda",email:"nkeen@aveda.com",note:"",status:"target",engagements:[
+      {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-18",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Allison Belgard",initials:"AB",title:"Technology Manager, Americas Oxidation Catalysts",company:"BASF",email:"allison.belgard@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Christophe Buchler",initials:"CB",title:"Business Manager",company:"BASF",email:"christophe.buchler@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Claus Hackmann",initials:"CH",title:"Senior Investment Manager, BASF Venture Capital",company:"BASF",email:"claus.hackmann@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Darren Budd",initials:"DB",title:"MD, Aquaspersions (prev. BASF)",company:"BASF",email:"darren.budd@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Dejan Petrovic",initials:"DP",title:"Director – Business Management CASE & Footwear, Performance Materials Europe",company:"BASF",email:"dejan.petrovic@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Guido Baumoeller",initials:"GB",title:"Technical Key Account Innovation Manager, BASF Personal Care",company:"BASF",email:"guido.baumoeller@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Juergen Tropsch",initials:"JT",title:"Surfactants Division",company:"BASF",email:"juergen.tropsch@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Kati Schmidt",initials:"KS",title:"Surfactants Division",company:"BASF",email:"kati.schmidt@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Li Li",initials:"LL",title:"",company:"BASF",email:"li.li@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Marc Leduc",initials:"ML",title:"BASF Ventures",company:"BASF",email:"marc.leduc@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Maurizio Balzelli",initials:"MB",title:"Product Manager",company:"BASF",email:"maurizio.balzelli@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Nalini Kelly",initials:"NK",title:"Acquisitions and Partnership Manager Care Chemicals - North America",company:"BASF",email:"nalini.kelly@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:8,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:4,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:11,clicks:0}
+  ]},
+  {name:"Ruth Lohwasser",initials:"RL",title:"Group Leader Polyols Technical",company:"BASF",email:"ruth.lohwasser@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:55,clicks:0}
+  ]},
+  {name:"Sage Hartlaub",initials:"SH",title:"Global Sustainability Manager",company:"BASF",email:"sage.hartlaub@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:2},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Seth Erdner",initials:"SE",title:"Vice President Industrial Formulators Americas",company:"BASF",email:"seth.erdner@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Torsten Wieprecht",initials:"TW",title:"Surfactants Division",company:"BASF",email:"torsten.wieprecht@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Zheng Wu",initials:"ZW",title:"Marketing Manager – Footwear, Sports & Leisure",company:"BASF",email:"zheng.wu@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:3,clicks:0},
+      {campaign_id:"web_form",month:"2026-04",opens:0,clicks:0,web_form:true,date:"2026-04-06",source:"UTech SEAsia"}
+  ]},
+  {name:"Isabelle Letrez",initials:"IL",title:"R&D Project Lead (Delicate Care)",company:"Christeyns",email:"isabelle.letrez@christeyns.com",note:"",status:"target",engagements:[
+      {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-21",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Ana Oliveira",initials:"AO",title:"",company:"Clariant",email:"ana.oliveira@clariant.com",note:"",status:"target",engagements:[
+      {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-19",source:"Recreaire Brochure Download"},
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
+  ]},
+  {name:"Dirk-Roland Kuppert",initials:"DK",title:"Innovation Project Manager",company:"Clariant",email:"dirkroland.kuppert@clariant.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:2,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0}
+  ]},
+  {name:"Katie Wang",initials:"KW",title:"",company:"Clariant",email:"katie.wang@clariant.com",note:"",status:"target",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:2,clicks:0},
+      {campaign_id:"web_form",month:"2026-02",opens:0,clicks:0,web_form:true,date:"2026-02-11",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"A.J. Nunez",initials:"AN",title:"",company:"Dow Chemical",email:"ajnunez@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"D.K. Todd",initials:"DT",title:"Global Product Manager Polyols (Commercial)",company:"Dow Chemical",email:"dktodd@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"E. Quintanilla",initials:"EQ",title:"Global Mobility Marketing Director",company:"Dow Chemical",email:"equintanilla@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:10,clicks:0},
+      {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"J.M. Palmieri",initials:"JP",title:"President Industrial Intermediates and Infrastructure",company:"Dow Chemical",email:"jmpalmieri@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"J. Penrice",initials:"JP",title:"President Mobility",company:"Dow Chemical",email:"jpenrice@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"K.J. Meyer",initials:"KM",title:"",company:"Dow Chemical",email:"kjmeyer@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"M. Moeller",initials:"MM",title:"Global Sustainability Director Dow Polyurethanes",company:"Dow Chemical",email:"mmoeller@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"P. Cookson",initials:"PC",title:"Global Application Technology Leader",company:"Dow Chemical",email:"pcookson@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:2,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"S. Nad",initials:"SN",title:"",company:"Dow Chemical",email:"snad@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:3,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:3,clicks:0}
+  ]},
+  {name:"W.A. Koonce",initials:"WK",title:"Global Product Manager Polyols (Technical)",company:"Dow Chemical",email:"wakoonce@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"W. Yu",initials:"WY",title:"",company:"Dow Chemical",email:"wyu@dow.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:26,clicks:0}
+  ]},
+  {name:"Emily Schweissinger",initials:"ES",title:"Technology Manager - Comfort & Insulation",company:"Evonik",email:"emily.schweissinger@evonik.com",note:"",status:"target",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:35,clicks:0}
+  ]},
+  {name:"Michael Holthausen",initials:"MH",title:"Head of R&D Technology – Organic Polymers",company:"Evonik",email:"michael.holthausen@evonik.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"Mladen Vidakovic",initials:"MV",title:"Manager Technical Service",company:"Evonik",email:"mladen.vidakovic@evonik.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:1}
+  ]},
+  {name:"Rick Theiner",initials:"RT",title:"Applied Technology Manager (Surfactant Science)",company:"Evonik",email:"rick.theiner@evonik.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:2,clicks:0}
+  ]},
+  {name:"Moritz Stanek",initials:"MS",title:"",company:"Henkel",email:"moritz.stanek@henkel.com",note:"",status:"target",engagements:[
+      {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-11",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Rolf Bayersdoerfer",initials:"RB",title:"Corporate Director, Open Innovation & New Business",company:"Henkel",email:"rolf.bayersdoerfer@henkel.com",note:"",status:"target",engagements:[
+      {campaign_id:"web_form",month:"2026-04",opens:0,clicks:0,web_form:true,date:"2026-04-24",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Veronica Tang",initials:"VT",title:"Regional Category Manager Purchasing",company:"Henkel",email:"veronica.tang@henkel.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Ralf Ewering",initials:"RE",title:"Chief Sustainability Officer – Europe",company:"KLK Oleo",email:"ralf.ewering@klkoleo.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Steffen Bruells",initials:"SB",title:"Senior Researcher – Home Care",company:"Nouryon",email:"steffen.bruells@nouryon.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"web_form",month:"2026-01",opens:0,clicks:0,web_form:true,date:"2026-01-12",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Nuramnimunifah Musta",initials:"NM",title:"",company:"Petronas",email:"nuramnimunifah.musta@petronas.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Willem Rensink",initials:"WR",title:"Category Group Director – R&D Hygiene Home, Innovation Partnerships",company:"Reckitt",email:"willem.rensink@gmail.com",note:"",status:"target",engagements:[
+      {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-21",source:"Recreaire Brochure Download, Simon FoS 2026 Recreaire"}
+  ]},
+  {name:"Amol Hivrale",initials:"AH",title:"Business Leader – Biotech",company:"Rossari Biotech",email:"amol.hivrale@rossari.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:1},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Sogo Yip",initials:"SY",title:"Manager, Business & Marketing Intelligence",company:"Sasol",email:"sogo.yip@sasol.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Marcin Brzezinski",initials:"MB",title:"EU Technical Development Manager - European Polymers",company:"Stepan",email:"marcin.brzezinski@stepan.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:2,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:2,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
+  ]},
+  {name:"M. Knock",initials:"MK",title:"Research Associate – Surface, Colloid & Interface Formulations",company:"Stepan",email:"mknock@stepan.com",note:"",status:"target",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:3,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:3,clicks:0},
+      {campaign_id:"web_form",month:"2026-01",opens:0,clicks:0,web_form:true,date:"2026-01-05",source:"Recreaire Brochure Download"},
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"R. Stubbs",initials:"RS",title:"Vice President, European Polymers",company:"Stepan",email:"rstubbs@stepan.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"Renata Brito",initials:"RB",title:"",company:"Syensqo",email:"renata.brito@syensqo.com",note:"",status:"target",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Ian Howell",initials:"IH",title:"Homecare S&T Director – Advanced Materials and Surface Science",company:"Unilever",email:"ian.howell@unilever.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Martin Crossman",initials:"MC",title:"Technology Manager, Lead Scientist",company:"Unilever",email:"martin.crossman@unilever.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:51,clicks:2},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Singaraja Thevar",initials:"ST",title:"",company:"Unilever",email:"singaraja.thevar@unilever.com",note:"",status:"target",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Serge Yeterian",initials:"SY",title:"EMEA Market Segment Director – Home Care & Industrial Cleaning",company:"Azelis",email:"serge.yeterian@azelis.com",note:"",status:"extended",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:3,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
+      {campaign_id:"web_form",month:"2026-01",opens:0,clicks:0,web_form:true,date:"2026-01-14",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Andrea Luraghi",initials:"AL",title:"R&D and QC Manager",company:"COIM Group",email:"andrea.luraghi@coimgroup.com",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:3,clicks:0}
+  ]},
+  {name:"David Matuschek",initials:"DM",title:"Lab Head, Adhesive Resins",company:"Covestro",email:"david.matuschek@covestro.com",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:4,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:5,clicks:2},
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
+  ]},
+  {name:"Dietrich Firnhaber",initials:"DF",title:"Head of strategy and portfolio development",company:"Covestro",email:"dietrich.firnhaber@covestro.com",note:"",status:"extended",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"Michael-Ernst Schneider",initials:"MS",title:"IP",company:"Covestro",email:"michaelernst.schneider@covestro.com",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:4,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:3,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
+  ]},
+  {name:"Peter Gebauer",initials:"PG",title:"Global Product Manager - TDI & Polyether",company:"Covestro",email:"peter.gebauer@covestro.com",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:4,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:3,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"Ronald Emanuel",initials:"RE",title:"Head of Product Development AMS",company:"LANXESS",email:"ronald.emanuel@lanxess.com",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Stefania Nardin",initials:"SN",title:"Technologist - Cast Elastomers",company:"LANXESS",email:"stefania.nardin@lanxess.com",note:"",status:"extended",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Kos Tanaka",initials:"KT",title:"Deputy General Manager Project Development Dept",company:"Mitsui",email:"kos.tanaka@mitsui.com",note:"",status:"extended",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0}
+  ]},
+  {name:"Eisuke Akabane",initials:"EA",title:"",company:"Mitsui Chemicals",email:"eisuke.akabane@mitsuichemicals.com",note:"",status:"extended",engagements:[
+      {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
+  ]},
+  {name:"Vignesh K.R.",initials:"VK",title:"",company:"Mitsui Chemicals",email:"vignesh.kr@mitsuichemicals.com",note:"",status:"extended",engagements:[
+      {campaign_id:"web_form",month:"2026-04",opens:0,clicks:0,web_form:true,date:"2026-04-19",source:"PCE Polyols for Elastomer Applications Brochure"}
+  ]},
+  {name:"Yusaku Shin",initials:"YS",title:"Section Manager, Production Technologies Sect",company:"Mitsui Chemicals",email:"yusaku.shin@mitsuichemicals.com",note:"",status:"extended",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Bartosz Bańkowski",initials:"BB",title:"Director – New Technology Development",company:"PCC Rokita",email:"bartosz.bankowski@pcc.eu",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:4,clicks:0}
+  ]},
+  {name:"Suleyman Kudret",initials:"SK",title:"Resin and Coating Specialist",company:"Perstorp",email:"suleyman.kudret@perstorp.com",note:"",status:"extended",engagements:[
+      {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-19",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Bilal Ahmad",initials:"BA",title:"Principal, Shell Ventures",company:"Shell",email:"bilal.ahmad@shell.com",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:5,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:6,clicks:0},
+      {campaign_id:"surf_may",month:"2026-05",opens:16,clicks:0}
+  ]},
+  {name:"Harry Kettle",initials:"HK",title:"Investment Associate, Shell Ventures",company:"Shell",email:"harry.kettle@shell.com",note:"",status:"extended",engagements:[
+      {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-05",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Benedict Invergo",initials:"BI",title:"R&D and Product Development Manager",company:"Sherwin-Williams",email:"benedict.j.invergo@sherwin.com",note:"",status:"extended",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:2,clicks:0},
+      {campaign_id:"web_form",month:"2026-03",opens:0,clicks:0,web_form:true,date:"2026-03-25",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Hart Haugen",initials:"HH",title:"R&D Staff Scientist",company:"Sherwin-Williams",email:"hart.haugen@sherwin.com",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
+      {campaign_id:"polyols_mar",month:"2026-03",opens:4,clicks:3},
+      {campaign_id:"surf_may",month:"2026-05",opens:6,clicks:0}
+  ]},
+  {name:"A. Brook",initials:"AB",title:"Account Manager – Personal Care Ingredients",company:"Surfachem",email:"abrook@surfachem.com",note:"",status:"extended",engagements:[
+      {campaign_id:"web_form",month:"2026-03",opens:0,clicks:0,web_form:true,date:"2026-03-22",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Patricia O\'Brien",initials:"PO",title:"Chief Sustainability Officer",company:"Teknor Apex",email:"pobrien@teknorapex.com",note:"",status:"extended",engagements:[
+      {campaign_id:"web_form",month:"2026-01",opens:0,clicks:0,web_form:true,date:"2026-01-05",source:""}
+  ]},
+  {name:"Brian Cameron",initials:"BC",title:"Managing Director",company:"ThyssenKrupp",email:"brian.cameron@thyssenkrupp.com",note:"",status:"extended",engagements:[
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
+      {campaign_id:"polyols_r",month:"2026-03",opens:2,clicks:0}
+  ]},
+  {name:"Pardorn Nutprasasn",initials:"PN",title:"Head of Engineering - Oleochemicals",company:"ThyssenKrupp",email:"pardorn.nutprasasn@thyssenkrupp.com",note:"",status:"extended",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Shuo Zhang",initials:"SZ",title:"Head of BD and Sales China",company:"ThyssenKrupp",email:"shuo.zhang@thyssenkrupp.com",note:"",status:"extended",engagements:[
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
+  ]},
+  {name:"Varun Rikhi",initials:"VR",title:"PU R&D",company:"Shell",email:"varun.rikhi@shell.com",note:"",status:"extended",engagements:[
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"Richard Mauldon",initials:"RM",title:"Area Sales Manager – European Polymers",company:"Stepan",email:"richard.mauldon@stepaneurope.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"Joe Mahoney",initials:"JM",title:"EU Technical Development Specialist",company:"Stepan",email:"joe.mahoney@stepaneurope.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
+  ]},
+  {name:"Louis Snyders",initials:"LS",title:"Vice President, Care Chemicals",company:"Sasol",email:"louis.snyders@us.sasol.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+];
+
+// ════════════════════════════════════════════════════════════
+//  SCORING ENGINE
+// ════════════════════════════════════════════════════════════
+
+function scoreContact(c, monthFilter) {
+  var eng = c.engagements;
+  if (monthFilter) eng = eng.filter(function(e){return e.month===monthFilter;});
+  if (!eng.length) return 0;
+  var score=0, totalClicks=0, hasForm=false, hasClick=false;
+  var baseCamps = {};
+  eng.forEach(function(e){
+    var cl = e.clicks||0;
+    totalClicks += cl;
+    if (cl>0) hasClick=true;
+    if (e.opens>1) score += SCORE.repeat_opens;
+    if (e.web_form) hasForm=true;
+    if (e.opens>=1 && !e.web_form) {
+      var base = e.campaign_id.replace(/_r$/,"");
+      baseCamps[base]=true;
+    }
+  });
+  score += totalClicks * SCORE.email_click_each;
+  if (hasForm) score += SCORE.web_form;
+  if (Object.keys(baseCamps).length>=2 && hasClick) score += SCORE.multi_campaign_bonus;
+  return score;
+}
+
+function isMQL(c, monthFilter) {
+  var eng = c.engagements;
+  if (monthFilter) eng = eng.filter(function(e){return e.month===monthFilter;});
+  if (!eng.length) return false;
+  var hasClick  = eng.some(function(e){return e.clicks>0;});
+  var hasRepeat = eng.some(function(e){return e.opens>1;});
+  var hasForm   = eng.some(function(e){return e.web_form;});
+  var baseCamps = {};
+  eng.forEach(function(e){if(e.opens>=1&&!e.web_form){baseCamps[e.campaign_id.replace(/_r$/,"")]=true;}});
+  var multiCamp = Object.keys(baseCamps).length>=2;
+  return hasClick||hasRepeat||hasForm||(multiCamp&&hasClick);
+}
+
+function getLastTouchDate(c, monthFilter) {
+  var eng = c.engagements;
+  if (monthFilter) eng = eng.filter(function(e){return e.month===monthFilter;});
+  if (!eng.length) return null;
+  // Web form engagements have exact date, email engagements have month only
+  var best = null;
+  eng.forEach(function(e){
+    if (e.date && e.date.length===10) {
+      // Exact date from web form
+      if (!best || e.date > best) best = e.date;
+    } else {
+      // Month only — use last day of month as estimate
+      var d = e.month + "-28";
+      if (!best || d > best) best = d;
+    }
+  });
+  if (!best) return null;
+  // Format nicely
+  var parts = best.split("-");
+  var yr=parts[0], mo=parseInt(parts[1])-1, dy=parseInt(parts[2]);
+  var monthNames=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return dy + " " + monthNames[mo] + " " + yr;
+}
+
+function getEmailSignal(c, monthFilter) {
+  var eng = c.engagements;
+  if (monthFilter) eng = eng.filter(function(e){return e.month===monthFilter;});
+  var emailEng = eng.filter(function(e){return !e.web_form;});
+  if (!emailEng.length) return "none";
+  var hasClick  = emailEng.some(function(e){return e.clicks>0;});
+  var hasRepeat = emailEng.some(function(e){return e.opens>1;});
+  if (hasClick) return "click";
+  if (hasRepeat) return "repeat";
+  return "open";
+}
+
+function getTopSignal(c, monthFilter) {
+  var eng = c.engagements;
+  if (monthFilter) eng = eng.filter(function(e){return e.month===monthFilter;});
+  var hasForm  = eng.some(function(e){return e.web_form;});
+  var hasClick = eng.some(function(e){return e.clicks>0;});
+  var hasRepeat= eng.some(function(e){return e.opens>1&&!e.web_form;});
+  if (hasForm && hasClick) return "both";
+  if (hasForm)   return "form";
+  if (hasClick)  return "click";
+  if (hasRepeat) return "repeat";
+  return "none";
+}
+
+function sigDot(type) {
+  var cls = type==="click"||type==="repeat" ? "dot-email" :
+            type==="form" ? "dot-form" :
+            type==="both" ? "dot-both" : "dot-none";
+  return "<span class=\"sig " + cls + "\"></span>";
+}
+
+function signalBadge(eng, source, emailTip) {
+  // eng = filtered engagements array — show ALL contributing signal types
+  var hasForm   = eng.some(function(e){ return e.web_form; });
+  var hasClick  = eng.some(function(e){ return (e.clicks||0) > 0; });
+  var hasRepeat = eng.some(function(e){ return (e.opens||0) > 1 && !e.web_form; });
+  var hasOpen   = eng.some(function(e){ return (e.opens||0) >= 1 && !e.web_form; });
+
+  var formTooltip  = source   ? "<span class=\"form-tooltip\">&#128196; " + source + "</span>" : "";
+  var emailTooltip = emailTip ? "<span class=\"email-tooltip\">" + emailTip + "</span>" : "";
+  var emailWrap    = emailTip ? "badge-email-wrap" : "";
+
+  var badges = "";
+  if (hasForm)
+    badges += "<span class=\"badge-form-wrap\"><span class=\"badge badge-form\">Web form download</span>" + formTooltip + "</span>";
+  if (hasClick)
+    badges += "<span class=\"" + emailWrap + "\"><span class=\"badge badge-click\">Clicked links in email</span>" + emailTooltip + "</span>";
+  else if (hasRepeat)
+    badges += "<span class=\"" + emailWrap + "\"><span class=\"badge badge-repeat\">Repeat email opens</span>" + emailTooltip + "</span>";
+  else if (hasOpen && !hasForm)
+    badges += "<span class=\"" + emailWrap + "\"><span class=\"badge badge-repeat\">Email opens</span>" + emailTooltip + "</span>";
+  return badges || "";
+}
+
+// ════════════════════════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════════════════════════
+
+// ════════════════════════════════════════════════════════════
+//  MQL EMAIL TEMPLATES — Simon Bennett, Surfactants
+// ════════════════════════════════════════════════════════════
+var MQL_EMAILS = {
+  form: {
+    "recreaire": {
+      subject: "Following up on Recreaire",
+      body: "Hi [First Name],\n\nI noticed you downloaded Econic\u2019s Recreaire surfactants brochure. Any questions? If you\u2019re exploring alternatives to conventional surfactants, I\u2019d be happy to connect.\n\nBest,\nSimon Bennett\nCommercial Director, Surfactants\nEconic Technologies"
+    },
+    "rinse": {
+      subject: "Following up on Recreaire in rinse aid formulations",
+      body: "Hi [First Name],\n\nThanks for taking a look at Econic Technologies\u2019 rinse aids use case. Did you find what you were looking for? If you have any follow-up questions about Recreaire and rinse aids, I\u2019d be happy to connect.\n\nBest,\nSimon Bennett\nCommercial Director, Surfactants\nEconic Technologies"
+    },
+    "emulsif": {
+      subject: "Following up on Recreaire for emulsification",
+      body: "Hi [First Name],\n\nI saw you downloaded our emulsification use case. Any questions? If you\u2019re exploring alternatives to conventional surfactants, I\u2019d be happy to connect.\n\nBest,\nSimon Bennett\nCommercial Director, Surfactants\nEconic Technologies"
+    },
+    "default": {
+      subject: "Following up on CO2 surfactants / Recreaire carbonate ethoxylates",
+      body: "Hi [First Name],\n\nI noticed you downloaded Econic\u2019s recent presentation about Recreaire CO2-based surfactants. Did you find what you were looking for? Please let me know if you have any follow-up questions. Happy to connect.\n\nBest,\nSimon Bennett\nCommercial Director, Surfactants\nEconic Technologies"
+    }
+  },
+  click: {
+    subject: "Following up on CO2 surfactants / Recreaire carbonate ethoxylates",
+    body: "Hi [First Name],\n\nI noticed your interest in some of Econic\u2019s technology for surfactants made from carbon dioxide. Please let me know if you have any questions. I\u2019d be happy to chat or connect you with one of our applications experts.\n\nBest,\nSimon Bennett\nCommercial Director, Surfactants\nEconic Technologies"
+  }
+};
+
+function getMQLEmail(signal, formSource, firstName) {
+  var tpl;
+  if (signal === "form" || signal === "both") {
+    var src = (formSource || "").toLowerCase();
+    if (src.indexOf("rinse") !== -1)         tpl = MQL_EMAILS.form["rinse"];
+    else if (src.indexOf("emulsif") !== -1)  tpl = MQL_EMAILS.form["emulsif"];
+    else if (src.indexOf("recreaire") !== -1 || src.indexOf("brochure") !== -1)
+                                              tpl = MQL_EMAILS.form["recreaire"];
+    else                                      tpl = MQL_EMAILS.form["default"];
+  } else {
+    tpl = MQL_EMAILS.click;
+  }
+  if (!tpl) tpl = MQL_EMAILS.click;
+  var name = firstName && firstName.trim() ? firstName.trim() : "[First Name]";
+  return {
+    subject: tpl.subject,
+    body: tpl.body.replace("[First Name]", name)
+  };
+}
+
+var currentView = "month";
+var heatmapExpanded = false;
+
+// ── Contact status (emailed / not-relevant / in-convo) ──────────────────
+var contactStatuses = {};  // email -> status string
+
+function loadStatuses() {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyR-IxJpC3qvbpalA58nN6SpVjuO6F0z-RI8NJ_-Bl2iEjQIbsPUivky4cj8dV0Na6u/exec") return;
+  fetch(APPS_SCRIPT_URL + "?action=get&dashboard=" + DASHBOARD_ID)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      contactStatuses = {};
+      (data.rows || []).forEach(function(row){
+        contactStatuses[row.email] = row.status;
+      });
+      applyStatuses();
+      updateSummary();
+    })
+    .catch(function(e){ console.warn("Status load failed:", e); });
+}
+
+function saveStatus(email, status) {
+  contactStatuses[email] = status;
+  updateSummary();
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyR-IxJpC3qvbpalA58nN6SpVjuO6F0z-RI8NJ_-Bl2iEjQIbsPUivky4cj8dV0Na6u/exec") return;
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      action: "set",
+      dashboard: DASHBOARD_ID,
+      email: email,
+      status: status,
+      period: REPORT_PERIOD,
+      updated_at: new Date().toISOString()
+    })
+  }).catch(function(e){ console.warn("Status save failed:", e); });
+}
+
+function applyStatuses() {
+  document.querySelectorAll(".status-pill").forEach(function(btn){
+    var email  = btn.dataset.email;
+    var status = btn.dataset.status;
+    btn.classList.remove("active-emailed","active-not-relevant","active-in-convo");
+    if (contactStatuses[email] === status) {
+      btn.classList.add("active-" + status);
+    }
+  });
+}
+
+function updateSummary() {
+  var counts = {emailed:0, "not-relevant":0, "in-convo":0};
+  Object.values(contactStatuses).forEach(function(s){ if (counts[s] !== undefined) counts[s]++; });
+  var total = counts.emailed + counts["not-relevant"] + counts["in-convo"];
+  var el = document.getElementById("outreach-summary");
+  if (!el) return;
+  if (total === 0) { el.textContent = ""; return; }
+  var parts = [];
+  if (counts.emailed)           parts.push(counts.emailed + " emailed");
+  if (counts["in-convo"])       parts.push(counts["in-convo"] + " in conversation");
+  if (counts["not-relevant"])   parts.push(counts["not-relevant"] + " skipped");
+  el.textContent = parts.join(" · ") + " — last updated " + new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});
+}
+
+function bindStatusPills() {
+  document.querySelectorAll(".status-pill").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var email  = btn.dataset.email;
+      var status = btn.dataset.status;
+      // Toggle off if already active
+      if (contactStatuses[email] === status) {
+        delete contactStatuses[email];
+        saveStatus(email, "cleared");
+      } else {
+        saveStatus(email, status);
+      }
+      applyStatuses();
+      updateSummary();
+    });
+  });
+}
+
+function renderHeatmap(tbodyHtml) {
+  var rows = tbodyHtml.match(/<tr[\s\S]*?<\/tr>/g) || [];
+  var isEmpty = tbodyHtml.indexOf("No engagement signals") !== -1;
+  if (isEmpty || rows.length <= 4) {
+    document.getElementById("heatmap-tbody").innerHTML = tbodyHtml;
+    document.getElementById("heatmap-showmore").style.display = "none";
+    return;
+  }
+  var visible = heatmapExpanded ? rows : rows.slice(0, 4);
+  document.getElementById("heatmap-tbody").innerHTML = visible.join("");
+  var btn = document.getElementById("heatmap-showmore");
+  btn.style.display = "";
+  btn.textContent = heatmapExpanded
+    ? "Show fewer companies ▲"
+    : "Show all " + rows.length + " companies ▼";
+  btn.onclick = function() {
+    heatmapExpanded = !heatmapExpanded;
+    render();
+  };
+}
+
+function renderDelta(id, current, prev) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var diff = current - prev;
+  var cls, arrow, label;
+  if (diff > 0)      { cls="delta-up";   arrow="▲ "; label=arrow+diff+" vs "+PREV_MONTH.slice(0,7).replace("2026-","")+" ("+monthName(PREV_MONTH)+")"; }
+  else if (diff < 0) { cls="delta-down"; arrow="▼ "; label=arrow+Math.abs(diff)+" vs "+monthName(PREV_MONTH); }
+  else               { cls="delta-flat"; label="— same as "+monthName(PREV_MONTH); }
+  el.innerHTML = "<span class=\"delta-pill "+cls+"\">"+label+"</span>";
+}
+
+function monthName(ym) {
+  var months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return months[parseInt(ym.slice(5,7))-1];
+}
+
+function getFilteredContacts(monthFilter) {
+  return CONTACTS.filter(function(c){
+    var status = COMPANIES[c.company]||"other";
+    if (status==="other") return false;
+    if (monthFilter) return c.engagements.some(function(e){return e.month===monthFilter;});
+    return isMQL(c, null) && scoreContact(c, null)>0;
+  }).map(function(c){
+    var score = scoreContact(c, monthFilter);
+    return {c:c, score:score, status:COMPANIES[c.company]};
+  }).filter(function(x){ return x.score > 0; })
+    .sort(function(a,b){return b.score-a.score;});
+}
+
+function getCompanyData(monthFilter) {
+  var byComp = {};
+  CONTACTS.forEach(function(c){
+    var status = COMPANIES[c.company]||"other";
+    if (status==="other") return;
+    if (monthFilter && !c.engagements.some(function(e){return e.month===monthFilter;})) return;
+    var score = scoreContact(c, monthFilter);
+    if (score === 0) return;
+    if (!byComp[c.company]) byComp[c.company]={company:c.company,status:status,contacts:[],totalScore:0};
+    byComp[c.company].contacts.push(c);
+    byComp[c.company].totalScore += score;
+  });
+  return Object.values(byComp).sort(function(a,b){return b.totalScore-a.totalScore;});
+}
+
+function render() {
+  var mf = currentView==="month" ? CURRENT_MONTH : null;
+  var allFiltered = getFilteredContacts(mf);
+  console.log("DEBUG render: mf="+mf+" allFiltered="+allFiltered.length);
+  console.log("DEBUG statuses:", allFiltered.map(function(x){return x.status+":"+x.c.company;}).slice(0,5));
+  var targetList  = allFiltered.filter(function(x){return x.status==="target";});
+  var extList     = allFiltered.filter(function(x){return x.status==="extended";});
+  console.log("DEBUG targetList="+targetList.length+" extList="+extList.length);
+  var el = document.getElementById("metric-target");
+  console.log("DEBUG metric-target element:", el);
+  var companies   = getCompanyData(mf);
+  var maxScore    = companies.length ? companies[0].totalScore : 1;
+
+  // Metrics
+  var totalClicks = CONTACTS.reduce(function(acc,c){
+    var eng=c.engagements; if(mf) eng=eng.filter(function(e){return e.month===mf;});
+    return acc+eng.reduce(function(a,e){return a+(e.clicks||0);},0);
+  },0);
+  var webForms = CONTACTS.reduce(function(acc,c){
+    var eng=c.engagements; if(mf) eng=eng.filter(function(e){return e.month===mf;});
+    return acc+eng.filter(function(e){return e.web_form;}).length;
+  },0);
+  document.getElementById("metric-target").textContent  = targetList.length;
+  document.getElementById("metric-ext").textContent     = extList.length;
+  document.getElementById("metric-clicks").textContent  = totalClicks;
+  document.getElementById("metric-forms").textContent   = webForms;
+  document.getElementById("metric-sub-target").textContent = mf ? "Active in "+REPORT_PERIOD : "Simon's target list — YTD";
+  document.getElementById("metric-sub-ext").textContent    = mf ? "Active in "+REPORT_PERIOD : "Extended industry list — YTD";
+
+  // MoM delta pills — only meaningful in month view
+  if (mf) {
+    var prevMonth = PREV_MONTH;
+    var prevFiltered = getFilteredContacts(prevMonth);
+    var prevTarget = prevFiltered.filter(function(x){return x.status==="target";}).length;
+    var prevExt    = prevFiltered.filter(function(x){return x.status==="extended";}).length;
+    var prevClicks = CONTACTS.reduce(function(acc,c){
+      var eng=c.engagements.filter(function(e){return e.month===prevMonth;});
+      return acc+eng.reduce(function(a,e){return a+(e.clicks||0);},0);
+    },0);
+    var prevForms = CONTACTS.reduce(function(acc,c){
+      return acc+c.engagements.filter(function(e){return e.month===prevMonth&&e.web_form;}).length;
+    },0);
+    renderDelta("delta-target", targetList.length, prevTarget);
+    renderDelta("delta-ext",    extList.length,    prevExt);
+    renderDelta("delta-clicks", totalClicks,       prevClicks);
+    renderDelta("delta-forms",  webForms,          prevForms);
+  } else {
+    ["delta-target","delta-ext","delta-clicks","delta-forms"].forEach(function(id){
+      document.getElementById(id).innerHTML = "";
+    });
+  }
+
+  // Heat map
+  var thead = "<tr><th>Company</th><th>Contacts</th>"
+    + "<th>Email engagement <span class=\"tooltip-icon\" data-tip=\"Click, repeat opens, or multi-campaign engagement\">?</span></th>"
+    + "<th>Web form</th>"
+    + "<th style=\"min-width:80px\">Score <span class=\"tooltip-icon\" data-tip=\"+4 web form · +3 per click · +2 repeat opens · +2 multi-campaign bonus\">?</span></th>"
+    + "</tr>";
+
+  var tbody = companies.map(function(d){
+    var hasEmail = d.contacts.some(function(c){
+      return c.engagements.some(function(e){return !e.web_form&&(e.clicks>0||e.opens>1);});
+    });
+    var hasForm = d.contacts.some(function(c){
+      return c.engagements.some(function(e){return e.web_form;});
+    });
+    var emailSig = hasEmail ? "click" : "none";
+    var formSig  = hasForm  ? "form"  : "none";
+    var pct = maxScore>0 ? Math.round(d.totalScore/maxScore*100) : 0;
+    var extBadge = d.status==="extended" ? " <span style=\"font-size:10px;color:var(--yellow-text)\">&#9873;</span>" : "";
+    var rowStyle = d.status==="target" ? "" : " style=\"opacity:.8\"";
+    return "<tr" + rowStyle + "><td><span class=\"company-name\">" + d.company + extBadge + "</span></td>"
+      + "<td class=\"contact-count\">" + d.contacts.length + "</td>"
+      + "<td style=\"text-align:center\">" + sigDot(emailSig) + "</td>"
+      + "<td style=\"text-align:center\">" + sigDot(formSig)  + "</td>"
+      + "<td><div class=\"score-wrap\"><div class=\"score-bar-bg\"><div class=\"score-bar-fill\" style=\"width:"+pct+"%\"></div></div><span class=\"score-num\">"+d.totalScore+"</span></div></td>"
+      + "</tr>";
+  }).join("");
+
+  var emptyRow = "<tr><td colspan=\"5\" style=\"text-align:center;padding:24px;color:var(--grey-500)\">No engagement signals in this period</td></tr>";
+  document.getElementById("heatmap-thead").innerHTML = thead;
+  renderHeatmap(tbody || emptyRow);
+
+  // Priority outreach (target)
+  document.getElementById("contact-grid-target").innerHTML = renderContactCards(targetList, false);
+  // Additional outreach (extended)
+  document.getElementById("contact-grid-ext").innerHTML = renderContactCards(extList, true);
+
+  // Show/hide additional section if empty
+  var extSection = document.getElementById("ext-section");
+  extSection.style.display = extList.length ? "" : "none";
+}
+
+function renderContactCards(list, isExt) {
+  if (!list.length) return "<p style=\"color:var(--grey-500);font-size:13px;padding:16px\">No contacts in this period</p>";
+  var mf = currentView==="month" ? CURRENT_MONTH : null;
+  return list.map(function(item){
+    var c = item.c;
+    var signal = getTopSignal(c, mf);
+    var lastTouch = getLastTouchDate(c, mf) || "—";
+    var engFiltered = mf ? c.engagements.filter(function(e){return e.month===mf;}) : c.engagements;
+    var formEng = engFiltered.filter(function(e){return e.web_form && e.source;});
+    var formSource = formEng.length ? formEng.map(function(e){return e.source;}).join(", ") : null;
+    var emailEng = engFiltered.filter(function(e){return !e.web_form && (e.opens > 0 || e.clicks > 0);});
+    var emailTip = emailEng.length ? emailEng.map(function(e){
+      var camp = CAMPAIGNS[e.campaign_id] ? CAMPAIGNS[e.campaign_id].label : e.campaign_id;
+      var parts = [];
+      if (e.opens > 0)  parts.push(e.opens + (e.opens===1?" open":" opens"));
+      if (e.clicks > 0) parts.push(e.clicks + (e.clicks===1?" click":" clicks"));
+      return camp + ": " + parts.join(", ");
+    }).join(" · ") : null;
+    var firstName = c.name ? c.name.split(" ")[0] : "";
+    var mqlSignal = (signal === "form" || signal === "both") ? "form" : (signal === "click" ? "click" : "click");
+    var draft = getMQLEmail(mqlSignal, formSource, firstName);
+    var mailtoHref = "mailto:" + c.email + "?subject=" + encodeURIComponent(draft.subject) + "&body=" + encodeURIComponent(draft.body);
+    var emailDiv = "<div class=\"contact-email\"><a href=\"" + mailtoHref + "\" style=\"color:var(--blue-text);text-decoration:none\">" + c.email + "</a></div>";
+    var noteHtml = c.note ? "<span class=\"badge badge-note\">" + c.note + "</span>" : "";
+    var scoreHtml = "<span class=\"badge badge-note\" style=\"font-family:var(--font-mono)\">score: " + item.score + "</span>";
+    return "<div class=\"contact-card" + (isExt?" ext-card":"") + "\">"
+      + "<div class=\"avatar" + (isExt?" ext":"") + "\">" + c.initials + "</div>"
+      + "<div class=\"contact-info\">"
+      + "<div class=\"contact-name\">" + c.name + "</div>"
+      + (c.title ? "<div class=\"contact-title\">" + c.title + "</div>" : "")
+      + "<div class=\"contact-company\">" + c.company + "</div>"
+      + emailDiv
+      + "<div class=\"contact-lasttouch\">Last touch: <strong>" + lastTouch + "</strong></div>"
+      + "<div class=\"badges\">" + signalBadge(engFiltered, formSource, emailTip) + noteHtml + scoreHtml + "</div>"
+      + "<div class=\"status-pills\">"
+      + "<button class=\"status-pill\" data-email=\"" + c.email + "\" data-status=\"emailed\">✉ Emailed</button>"
+      + "<button class=\"status-pill\" data-email=\"" + c.email + "\" data-status=\"not-relevant\">✗ Not relevant</button>"
+      + "<button class=\"status-pill\" data-email=\"" + c.email + "\" data-status=\"in-convo\">💬 In conversation</button>"
+      + "</div>"
+      + "</div></div>";
+  }).join("");
+}
+
+function setView(v) {
+  currentView = v;
+  document.querySelectorAll(".toggle-btn").forEach(function(b){b.classList.toggle("active",b.dataset.view===v);});
+  heatmapExpanded=false;
+  render();
+  applyStatuses();
+  updateSummary();
+}
+
+render();
+loadStatuses();
+document.addEventListener("click", function(e){
+  if (e.target.classList.contains("status-pill")) {
+    var email  = e.target.dataset.email;
+    var status = e.target.dataset.status;
+    if (contactStatuses[email] === status) {
+      delete contactStatuses[email];
+      saveStatus(email, "cleared");
+    } else {
+      saveStatus(email, status);
+    }
+    applyStatuses();
+    updateSummary();
+  }
+});
+</script>
+<div id="global-tooltip"></div>
+<script>
+(function(){
+  var tip = document.getElementById("global-tooltip");
+  document.addEventListener("mouseover", function(e){
+    var el = e.target.closest(".tooltip-icon");
+    if (!el) return;
+    var text = el.getAttribute("data-tip");
+    if (!text) return;
+    tip.textContent = text;
+    tip.style.opacity = "1";
+  });
+  document.addEventListener("mousemove", function(e){
+    if (tip.style.opacity !== "1") return;
+    var x = e.clientX, y = e.clientY;
+    tip.style.left = (x - tip.offsetWidth/2) + "px";
+    tip.style.top  = (y - tip.offsetHeight - 10) + "px";
+  });
+  document.addEventListener("mouseout", function(e){
+    var el = e.target.closest(".tooltip-icon");
+    if (!el) return;
+    tip.style.opacity = "0";
+  });
+})();
+</script>
+</body>
+</html>
