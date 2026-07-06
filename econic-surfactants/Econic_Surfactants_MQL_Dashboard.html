@@ -122,22 +122,27 @@ tbody td{padding:9px 12px;vertical-align:middle}
 .flag-badge{display:inline-flex;align-items:center;gap:5px;background:var(--yellow-bg);color:var(--yellow-text);border:1px solid var(--yellow-border);border-radius:20px;font-size:10px;font-weight:600;padding:3px 8px;margin-left:6px}
 @media(max-width:700px){.metrics{grid-template-columns:repeat(2,1fr)}.contact-grid{grid-template-columns:1fr}.logic-grid{grid-template-columns:1fr}}
 </style>
-</head>
-<body><script>
+<style id="auth-hide">body{display:none!important}</style>
+<script>
 (function(){
-  var pwd = sessionStorage.getItem('mql_auth');
-  if (pwd !== 'econicmarketing2026!') {
-    pwd = prompt('Enter password to access this dashboard:');
-    if (pwd !== 'econicmarketing2026!') {
-      document.write('<div style="font-family:sans-serif;padding:40px;text-align:center"><h2>Access denied</h2><p>Incorrect password. Please reload and try again.</p></div>');
-      document.close();
-      return;
-    }
-    sessionStorage.setItem('mql_auth', pwd);
+  var PASS = 'econicmarketing2026!';
+  var stored = sessionStorage.getItem('mql_auth');
+  if (stored === PASS) {
+    document.getElementById('auth-hide').remove();
+    return;
+  }
+  var attempt = prompt('Enter password to access this dashboard:');
+  if (attempt === PASS) {
+    sessionStorage.setItem('mql_auth', PASS);
+    document.getElementById('auth-hide').remove();
+  } else {
+    document.write('<div style="font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#F8F8F6"><div style="text-align:center"><p style="font-size:16px;color:#2C2C2A;font-weight:600">Incorrect password.</p><p style="font-size:13px;color:#888880">Please reload the page and try again.</p></div></div>');
+    document.close();
   }
 })();
 </script>
-
+</head>
+<body>
 <div class="shell">
 
 
@@ -824,18 +829,14 @@ function saveStatus(email, status) {
   contactStatuses[email] = status;
   updateSummary();
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyR-IxJpC3qvbpalA58nN6SpVjuO6F0z-RI8NJ_-Bl2iEjQIbsPUivky4cj8dV0Na6u/exec") return;
-  fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      action: "set",
-      dashboard: DASHBOARD_ID,
-      email: email,
-      status: status,
-      period: REPORT_PERIOD,
-      updated_at: new Date().toISOString()
-    })
-  }).catch(function(e){ console.warn("Status save failed:", e); });
+  var params = "?action=set"
+    + "&dashboard=" + encodeURIComponent(DASHBOARD_ID)
+    + "&email="     + encodeURIComponent(email)
+    + "&status="    + encodeURIComponent(status)
+    + "&period="    + encodeURIComponent(REPORT_PERIOD)
+    + "&updated_at="+ encodeURIComponent(new Date().toISOString());
+  fetch(APPS_SCRIPT_URL + params, {mode: "no-cors"})
+    .catch(function(e){ console.warn("Status save failed:", e); });
 }
 
 function applyStatuses() {
