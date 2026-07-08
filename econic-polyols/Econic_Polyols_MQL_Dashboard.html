@@ -250,7 +250,7 @@ if (new URLSearchParams(window.location.search).get("admin")==="true") {
 //  CONFIG — update these each month
 // ════════════════════════════════════════════════════════════
 // ── Google Apps Script endpoint (paste your deployed URL here) ──────────
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyR-IxJpC3qvbpalA58nN6SpVjuO6F0z-RI8NJ_-Bl2iEjQIbsPUivky4cj8dV0Na6u/exec";
+const APPS_SCRIPT_URL = "https://tools.macallenmedia.com/.netlify/functions/mql-status";
 const DASHBOARD_ID    = "econic-polyols";  // unique ID per dashboard
 
 const REPORT_PERIOD  = "May 2026";
@@ -1072,7 +1072,7 @@ var contactStatuses = {};  // email -> status string
 
 function loadStatuses() {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyR-IxJpC3qvbpalA58nN6SpVjuO6F0z-RI8NJ_-Bl2iEjQIbsPUivky4cj8dV0Na6u/exec") return;
-  fetch(APPS_SCRIPT_URL + "?action=get&dashboard=" + DASHBOARD_ID)
+  fetch(APPS_SCRIPT_URL + "?dashboard=" + DASHBOARD_ID)
     .then(function(r){ return r.json(); })
     .then(function(data){
       contactStatuses = {};
@@ -1093,7 +1093,6 @@ function saveStatus(email, status) {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
-      action: "set",
       dashboard: DASHBOARD_ID,
       email: email,
       status: status,
