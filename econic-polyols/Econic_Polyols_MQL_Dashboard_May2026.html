@@ -368,7 +368,8 @@ const COMPANIES = {
   "Trinseo":"extended",
   "UBE America Inc":"extended",
   "UBE Corporation Europe":"extended",
-  "Unilever":"extended"
+  "Unilever":"extended",
+  "Transquimica del Peru":"extended"
 };
 
 const CONTACTS = [
@@ -857,6 +858,9 @@ const CONTACTS = [
   ]},
   {name:"Helene Deliniere",initials:"HD",title:"PU Coatings",company:"Decathlon",email:"helene.deliniere@decathlon.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
+  ]},
+  {name:"Fernando",initials:"F",title:"",company:"Transquimica del Peru",email:"fernando@transquimicadelperu.com",note:"",status:"extended",engagements:[
+      {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-25",source:"Sample Formulation Download"}
   ]}
 ];
 
@@ -957,6 +961,26 @@ function sigDot(type) {
   return "<span class=\"sig " + cls + "\"></span>";
 }
 
+function formLabel(source) {
+  if (!source) return "Web download";
+  var s = source.toLowerCase();
+  if (s.indexOf("fos") !== -1 || s.indexOf("future of surfactants") !== -1) return "FoS Presentation";
+  if (s.indexOf("recreaire") !== -1)            return "Recreaire Brochure";
+  if (s.indexOf("europur") !== -1)              return "Europur Presentation";
+  if (s.indexOf("pud applications") !== -1)     return "PUD Brochure";
+  if (s.indexOf("pce polyols") !== -1)          return "PCE Polyols Brochure";
+  if (s.indexOf("utech") !== -1)                return "UTech Presentation";
+  if (s.indexOf("rinse aid") !== -1)            return "Rinse Aid Use Case";
+  if (s.indexOf("pfa award") !== -1)            return "PFA Award";
+  if (s.indexOf("sample formulation") !== -1)   return "Sample Formulation";
+  if (s.indexOf("icis") !== -1)                 return "ICIS Presentation";
+  if (s.indexOf("high load") !== -1)            return "High Load Foam Brochure";
+  if (s.indexOf("conventional foam") !== -1)    return "Conventional Foam Brochure";
+  if (s.indexOf("ve foam") !== -1)              return "VE Foam Brochure";
+  if (s.indexOf("elastomer") !== -1)            return "PCE Polyols Brochure";
+  return source.length > 30 ? source.substring(0, 28) + "\u2026" : source;
+}
+
 function signalBadge(eng, source, emailTip) {
   // eng = filtered engagements array — show ALL contributing signal types
   var hasForm   = eng.some(function(e){ return e.web_form; });
@@ -964,13 +988,28 @@ function signalBadge(eng, source, emailTip) {
   var hasRepeat = eng.some(function(e){ return (e.opens||0) > 1 && !e.web_form; });
   var hasOpen   = eng.some(function(e){ return (e.opens||0) >= 1 && !e.web_form; });
 
-  var formTooltip  = source   ? "<span class=\"form-tooltip\">&#128196; " + source + "</span>" : "";
   var emailTooltip = emailTip ? "<span class=\"email-tooltip\">" + emailTip + "</span>" : "";
   var emailWrap    = emailTip ? "badge-email-wrap" : "";
 
   var badges = "";
-  if (hasForm)
-    badges += "<span class=\"badge-form-wrap\"><span class=\"badge badge-form\">Web form download</span>" + formTooltip + "</span>";
+  if (hasForm) {
+    var allDownloads = [];
+    eng.filter(function(e){ return e.web_form; }).forEach(function(e){
+      var src = e.source || "";
+      var parts = src.split(/,\s*(?=[A-Z])/);
+      parts.forEach(function(p){ p = p.trim(); if (p) allDownloads.push(p); });
+    });
+    var seen = {};
+    var unique = allDownloads.filter(function(d){
+      if (seen[d]) return false; seen[d] = true; return true;
+    });
+    if (!unique.length) unique = [""];
+    unique.forEach(function(dl){
+      var label = formLabel(dl);
+      var tip = dl ? "<span class=\"form-tooltip\">&#128196; " + dl + "</span>" : "";
+      badges += "<span class=\"badge-form-wrap\"><span class=\"badge badge-form\">" + label + "</span>" + tip + "</span>";
+    });
+  }
   if (hasClick)
     badges += "<span class=\"" + emailWrap + "\"><span class=\"badge badge-click\">Clicked links in email</span>" + emailTooltip + "</span>";
   else if (hasRepeat)
@@ -1272,10 +1311,12 @@ function render() {
 
   var tbody = companies.map(function(d){
     var hasEmail = d.contacts.some(function(c){
-      return c.engagements.some(function(e){return !e.web_form&&(e.clicks>0||e.opens>1);});
+      var eng = mf ? c.engagements.filter(function(e){return e.month===mf;}) : c.engagements;
+      return eng.some(function(e){return !e.web_form&&(e.clicks>0||e.opens>1);});
     });
     var hasForm = d.contacts.some(function(c){
-      return c.engagements.some(function(e){return e.web_form;});
+      var eng = mf ? c.engagements.filter(function(e){return e.month===mf;}) : c.engagements;
+      return eng.some(function(e){return e.web_form;});
     });
     var emailSig = hasEmail ? "click" : "none";
     var formSig  = hasForm  ? "form"  : "none";
