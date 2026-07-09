@@ -235,7 +235,7 @@ tbody td{padding:9px 12px;vertical-align:middle}
 <div class="footer">
   <div class="archive-footer">
   <span class="archive-footer-label">Archive</span>
-  <span style="font-size:11px;color:var(--grey-400)">Previous months will appear here — add links as you publish each archive.</span>
+  <a class="archive-link" href="Econic_Surfactants_MQL_Dashboard_May2026.html">May 2026</a>
   <!-- Example: <a class="archive-link" href="Econic_Surfactants_MQL_Dashboard_May2026.html">May 2026</a> -->
 </div>
 
@@ -1094,7 +1094,7 @@ function renderDelta(id, current, prev) {
   if (!el) return;
   var diff = current - prev;
   var cls, arrow, label;
-  if (diff > 0)      { cls="delta-up";   arrow="▲ "; label=arrow+diff+" vs "+PREV_MONTH.slice(0,7).replace("2026-","")+" ("+monthName(PREV_MONTH)+")"; }
+  if (diff > 0)      { cls="delta-up";   arrow="▲ "; label=arrow+diff+" vs "+monthName(PREV_MONTH); }
   else if (diff < 0) { cls="delta-down"; arrow="▼ "; label=arrow+Math.abs(diff)+" vs "+monthName(PREV_MONTH); }
   else               { cls="delta-flat"; label="— same as "+monthName(PREV_MONTH); }
   el.innerHTML = "<span class=\"delta-pill "+cls+"\">"+label+"</span>";
