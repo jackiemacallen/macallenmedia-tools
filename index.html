@@ -1,34 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MacAllen Media — Client Tools</title>
-  <style>
-    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#F8F8F6;color:#2C2C2A;margin:0;padding:40px 24px}
-    .wrap{max-width:600px;margin:0 auto}
-    h1{font-size:22px;font-weight:700;margin:0 0 4px}
-    .sub{font-size:13px;color:#888880;margin-bottom:36px}
-    .card{background:#fff;border:1px solid #EFEFEC;border-radius:12px;padding:20px 24px;margin-bottom:12px;text-decoration:none;color:inherit;display:block}
-    .card:hover{border-color:#F58D1F}
-    .card-title{font-size:15px;font-weight:600;margin-bottom:4px}
-    .card-sub{font-size:12px;color:#888880}
-    .tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#FEF3E2;color:#F58D1F;padding:2px 8px;border-radius:20px;margin-bottom:8px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacAllen Media — Tools</title>
+<meta name="description" content="Private tools and utilities by MacAllen Media & Public Affairs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --subtle: #a8a8a8;
+    --rule: #e6e6e6;
+    --accent: #E61C5D;
+    --paper: #fdfcfa;
+    --mmpa-serif: 'Cormorant Garamond', Georgia, serif;
+    --mmpa-sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--mmpa-sans);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container {
+    max-width: 880px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .masthead {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin-bottom: 6rem;
+    font-family: var(--mmpa-sans);
+  }
+  .masthead .brand {
+    font-family: var(--mmpa-serif);
+    font-size: 1.55rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .masthead .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin: 0 0.15rem 0.18rem;
+  }
+  .masthead .section-label {
+    font-family: var(--mmpa-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* Lede */
+  .lede {
+    font-family: var(--mmpa-serif);
+    font-size: 2.4rem;
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    max-width: 22ch;
+    margin: 0 0 1.2rem;
+  }
+  .lede em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .sub {
+    font-size: 1.02rem;
+    color: var(--muted);
+    max-width: 52ch;
+    margin: 0 0 4rem;
+    line-height: 1.6;
+  }
+
+  /* Tools list */
+  .tools-label {
+    font-family: var(--mmpa-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .tool-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .tool-item {
+    display: block;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s ease;
+  }
+  .tool-item a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 0.4rem 1.5rem 0;
+    color: var(--ink);
+    text-decoration: none;
+    transition: padding 0.2s ease;
+  }
+  .tool-item:hover {
+    background: linear-gradient(to right, transparent, rgba(230,28,93,0.03) 30%, transparent);
+  }
+  .tool-item:hover a {
+    padding-left: 0.7rem;
+  }
+  .tool-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .tool-name {
+    font-family: var(--mmpa-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .tool-client {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .tool-arrow {
+    font-family: var(--mmpa-sans);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--subtle);
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .tool-item:hover .tool-arrow {
+    color: var(--accent);
+    transform: translateX(0.3rem);
+  }
+
+  /* Footer */
+  footer {
+    margin-top: auto;
+    border-top: 1px solid var(--rule);
+    padding: 1.5rem 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.82rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  footer .copyright {
+    font-family: var(--mmpa-sans);
+  }
+  footer .meta {
+    font-family: var(--mmpa-sans);
+    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--subtle);
+  }
+
+  /* Small viewport */
+  @media (max-width: 600px) {
+    .container { padding: 2.5rem 1.5rem; }
+    .masthead { margin-bottom: 3.5rem; }
+    .lede { font-size: 1.9rem; }
+    .tool-name { font-size: 1.25rem; }
+    .sub { margin-bottom: 3rem; }
+  }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>MacAllen Media &amp; Public Affairs</h1>
-    <p class="sub">Client tools — confidential</p>
-    <div class="tag">Econic Technologies</div>
-    <a class="card" href="/econic-surfactants/">
-      <div class="card-title">Surfactants MQL Dashboard</div>
-      <div class="card-sub">Marketing qualified leads · Simon Bennett</div>
-    </a>
-    <a class="card" href="/econic-polyols/">
-      <div class="card-title">Polyols MQL Dashboard</div>
-      <div class="card-sub">Marketing qualified leads · Richard Stevenson</div>
-    </a>
+<div class="container">
+
+  <div class="masthead">
+    <span class="brand">MacAllen Media</span>
+    <span class="dot"></span>
+    <span class="section-label">Tools</span>
   </div>
+
+  <h1 class="lede">A private workspace for <em>our clients</em>.</h1>
+  <p class="sub">Bespoke utilities built by MacAllen Media &amp; Public Affairs. Each tool is configured for a specific client engagement.</p>
+
+  <div class="tools-label">Active Tools</div>
+  <ul class="tool-list">
+    <li class="tool-item">
+      <a href="/haus-formulations/">
+        <div class="tool-content">
+          <div class="tool-client">Haus of Innovation</div>
+          <div class="tool-name">Concept Formulation Generator</div>
+        </div>
+        <div class="tool-arrow">Open →</div>
+      </a>
+    </li>
+    <li class="tool-item">
+      <a href="/econic-surfactants/">
+        <div class="tool-content">
+          <div class="tool-client">Econic Technologies</div>
+          <div class="tool-name">Surfactants MQL Dashboard</div>
+        </div>
+        <div class="tool-arrow">Open →</div>
+      </a>
+    </li>
+    <li class="tool-item">
+      <a href="/econic-polyols/">
+        <div class="tool-content">
+          <div class="tool-client">Econic Technologies</div>
+          <div class="tool-name">Polyols MQL Dashboard</div>
+        </div>
+        <div class="tool-arrow">Open →</div>
+      </a>
+    </li>
+  </ul>
+
+  <footer>
+    <span class="copyright">© MacAllen Media &amp; Public Affairs</span>
+    <span class="meta">macallenmedia.com</span>
+  </footer>
+
+</div>
 </body>
 </html>
