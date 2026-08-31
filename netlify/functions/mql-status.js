@@ -18,7 +18,26 @@ async function airtableFetch(path, options = {}) {
       ...(options.headers || {}),
     },
   });
-  return res.json();
+
+  let data;
+  try {
+    data = await res.json();
+  } catch (parseErr) {
+    data = null;
+  }
+
+  // Airtable returns a non-2xx status with an {error:{...}} body when a write
+  // fails (e.g. a Status value that no longer matches a valid select option).
+  // Surfacing that here is what fixes the historical "silent failure" bug --
+  // previously this function returned whatever Airtable sent back without
+  // checking it, so a rejected write still looked like {"success":true}.
+  if (!res.ok) {
+    const msg = (data && data.error && (data.error.message || data.error.type))
+      || `Airtable request failed with status ${res.status}`;
+    throw new Error(msg);
+  }
+
+  return data;
 }
 
 exports.handler = async function(event) {

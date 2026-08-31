@@ -879,7 +879,21 @@ function saveStatus(email, status) {
       period: REPORT_PERIOD,
       updated_at: new Date().toISOString()
     })
-  }).catch(function(e){ console.warn("Status save failed:", e); });
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    // The pill already flipped visually above -- this just catches the case
+    // where the save didn't actually reach Airtable, so it doesn't happen
+    // silently. Reload the page after fixing to re-sync from the real data.
+    if (!data || data.success !== true) {
+      console.error("Status save did not confirm:", data);
+      alert("This status change didn't save (server said: " + ((data && data.error) || "unknown error") + "). Please try again, or let Jackie know if it keeps happening.");
+    }
+  })
+  .catch(function(e){
+    console.warn("Status save failed:", e);
+    alert("This status change didn't save (connection problem). Please try again, or let Jackie know if it keeps happening.");
+  });
 }
 
 function applyStatuses() {
