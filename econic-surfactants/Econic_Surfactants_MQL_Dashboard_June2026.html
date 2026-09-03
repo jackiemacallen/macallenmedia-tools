@@ -246,8 +246,6 @@ tbody td{padding:9px 12px;vertical-align:middle}
   <div class="archive-footer">
   <span class="archive-footer-label">Archive</span>
   <a class="archive-link" href="Econic_Surfactants_MQL_Dashboard_May2026.html">May 2026</a>
-  <a class="archive-link" href="Econic_Surfactants_MQL_Dashboard_June2026.html">June 2026</a>
-  <a class="archive-link" href="Econic_Surfactants_MQL_Dashboard_July2026.html">July 2026</a>
 </div>
 
 <div class="footer-left">MMPA for Econic Technologies Ltd &middot; Surfactants MQL Dashboard &middot; <span id="footer-date"></span></div>
@@ -269,9 +267,9 @@ if (new URLSearchParams(window.location.search).get("admin")==="true") {
 const APPS_SCRIPT_URL = "https://tools.macallenmedia.com/.netlify/functions/mql-status";
 const DASHBOARD_ID    = "econic-surfactants";  // unique ID per dashboard
 
-const REPORT_PERIOD  = "August 2026";
-const CURRENT_MONTH  = "2026-08";
-const PREV_MONTH     = "2026-07";
+const REPORT_PERIOD  = "June 2026";
+const CURRENT_MONTH  = "2026-06";
+const PREV_MONTH     = "2026-05";
 
 // Scoring weights
 const SCORE = {
@@ -300,7 +298,6 @@ const CAMPAIGNS = {
   pud_pr_r:     {label:"PUD Press Release",                                   month:"2026-06"},
   polyols_jun:  {label:"Polyols June Email – PUD Brochure",                   month:"2026-06"},
   polyols_jun_r:{label:"Polyols June Email – PUD Brochure",                   month:"2026-06"},
-  supply_chain_jul: {label:"After Hormuz: Feedstock Article (Simon)", month:"2026-07"},
 };
 
 // Company status: "target" = Simon's list (green), "extended" = industry-relevant (yellow)
@@ -356,358 +353,294 @@ const COMPANIES = {
 };
 
 const CONTACTS = [
-{name:"Guillaume Jaunky",initials:"GJ",title:"Technical Director, BYK Additives & Instruments",company:"Altana",email:"guillaume.jaunky@altana.com",note:"",status:"target",engagements:[
+  {name:"Guillaume Jaunky",initials:"GJ",title:"Technical Director, BYK Additives & Instruments",company:"Altana",email:"guillaume.jaunky@altana.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
-{name:"Martin Schreiber",initials:"MS",title:"Research and Development Group Manager",company:"Altana",email:"martin.schreiber@altana.com",note:"",status:"target",engagements:[
+  {name:"Martin Schreiber",initials:"MS",title:"Research and Development Group Manager",company:"Altana",email:"martin.schreiber@altana.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:2,clicks:0},
-      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:14}
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Loïc Debergh",initials:"LD",title:"Project Director",company:"Arkema",email:"loic.debergh@arkema.com",note:"",status:"target",engagements:[
+  {name:"Loïc Debergh",initials:"LD",title:"Project Director",company:"Arkema",email:"loic.debergh@arkema.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:3,clicks:0},
-      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0}
   ]},
-{name:"Nathan Keen",initials:"NK",title:"Principal Scientist",company:"Aveda",email:"nkeen@aveda.com",note:"",status:"target",engagements:[
+  {name:"Nathan Keen",initials:"NK",title:"Principal Scientist",company:"Aveda",email:"nkeen@aveda.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-18",source:"Recreaire Brochure Download"}
   ]},
-{name:"Allison Belgard",initials:"AB",title:"Technology Manager, Americas Oxidation Catalysts",company:"BASF",email:"allison.belgard@basf.com",note:"",status:"target",engagements:[
+  {name:"Allison Belgard",initials:"AB",title:"Technology Manager, Americas Oxidation Catalysts",company:"BASF",email:"allison.belgard@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
-{name:"Christophe Buchler",initials:"CB",title:"Business Manager",company:"BASF",email:"christophe.buchler@basf.com",note:"",status:"target",engagements:[
+  {name:"Christophe Buchler",initials:"CB",title:"Business Manager",company:"BASF",email:"christophe.buchler@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Claus Hackmann",initials:"CH",title:"Senior Investment Manager, BASF Venture Capital",company:"BASF",email:"claus.hackmann@basf.com",note:"",status:"target",engagements:[
+  {name:"Claus Hackmann",initials:"CH",title:"Senior Investment Manager, BASF Venture Capital",company:"BASF",email:"claus.hackmann@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Darren Budd",initials:"DB",title:"MD, Aquaspersions (prev. BASF)",company:"BASF",email:"darren.budd@basf.com",note:"",status:"target",engagements:[
+  {name:"Darren Budd",initials:"DB",title:"MD, Aquaspersions (prev. BASF)",company:"BASF",email:"darren.budd@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Dejan Petrovic",initials:"DP",title:"Director – Business Management CASE & Footwear, Performance Materials Europe",company:"BASF",email:"dejan.petrovic@basf.com",note:"",status:"target",engagements:[
-      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Guido Baumoeller",initials:"GB",title:"Technical Key Account Innovation Manager, BASF Personal Care",company:"BASF",email:"guido.baumoeller@basf.com",note:"",status:"target",engagements:[
+  {name:"Dejan Petrovic",initials:"DP",title:"Director – Business Management CASE & Footwear, Performance Materials Europe",company:"BASF",email:"dejan.petrovic@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Juergen Tropsch",initials:"JT",title:"Surfactants Division",company:"BASF",email:"juergen.tropsch@basf.com",note:"",status:"target",engagements:[
-      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Kati Schmidt",initials:"KS",title:"Surfactants Division",company:"BASF",email:"kati.schmidt@basf.com",note:"",status:"target",engagements:[
+  {name:"Guido Baumoeller",initials:"GB",title:"Technical Key Account Innovation Manager, BASF Personal Care",company:"BASF",email:"guido.baumoeller@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Li Li",initials:"LL",title:"",company:"BASF",email:"li.li@basf.com",note:"",status:"target",engagements:[
-      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
-  ]},
-{name:"Marc Leduc",initials:"ML",title:"BASF Ventures",company:"BASF",email:"marc.leduc@basf.com",note:"",status:"target",engagements:[
-      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Maurizio Balzelli",initials:"MB",title:"Product Manager",company:"BASF",email:"maurizio.balzelli@basf.com",note:"",status:"target",engagements:[
+  {name:"Juergen Tropsch",initials:"JT",title:"Surfactants Division",company:"BASF",email:"juergen.tropsch@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"Nalini Kelly",initials:"NK",title:"Acquisitions and Partnership Manager Care Chemicals - North America",company:"BASF",email:"nalini.kelly@basf.com",note:"",status:"target",engagements:[
+  {name:"Kati Schmidt",initials:"KS",title:"Surfactants Division",company:"BASF",email:"kati.schmidt@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Li Li",initials:"LL",title:"",company:"BASF",email:"li.li@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
+  ]},
+  {name:"Marc Leduc",initials:"ML",title:"BASF Ventures",company:"BASF",email:"marc.leduc@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
+  ]},
+  {name:"Maurizio Balzelli",initials:"MB",title:"Product Manager",company:"BASF",email:"maurizio.balzelli@basf.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
+      {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
+  ]},
+  {name:"Nalini Kelly",initials:"NK",title:"Acquisitions and Partnership Manager Care Chemicals - North America",company:"BASF",email:"nalini.kelly@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:8,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:4,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:11,clicks:0}
   ]},
-{name:"Ruth Lohwasser",initials:"RL",title:"Group Leader Polyols Technical",company:"BASF",email:"ruth.lohwasser@basf.com",note:"",status:"target",engagements:[
+  {name:"Ruth Lohwasser",initials:"RL",title:"Group Leader Polyols Technical",company:"BASF",email:"ruth.lohwasser@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:55,clicks:0}
   ]},
-{name:"Sage Hartlaub",initials:"SH",title:"Global Sustainability Manager",company:"BASF",email:"sage.hartlaub@basf.com",note:"",status:"target",engagements:[
+  {name:"Sage Hartlaub",initials:"SH",title:"Global Sustainability Manager",company:"BASF",email:"sage.hartlaub@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:2},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:2}
   ]},
-{name:"Seth Erdner",initials:"SE",title:"Vice President Industrial Formulators Americas",company:"BASF",email:"seth.erdner@basf.com",note:"",status:"target",engagements:[
+  {name:"Seth Erdner",initials:"SE",title:"Vice President Industrial Formulators Americas",company:"BASF",email:"seth.erdner@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"jun_cta",month:"2026-06",opens:4,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"jun_cta",month:"2026-06",opens:4,clicks:0}
   ]},
-{name:"Torsten Wieprecht",initials:"TW",title:"Surfactants Division",company:"BASF",email:"torsten.wieprecht@basf.com",note:"",status:"target",engagements:[
+  {name:"Torsten Wieprecht",initials:"TW",title:"Surfactants Division",company:"BASF",email:"torsten.wieprecht@basf.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Isabelle Letrez",initials:"IL",title:"R&D Project Lead (Delicate Care)",company:"Christeyns",email:"isabelle.letrez@christeyns.com",note:"",status:"target",engagements:[
+  {name:"Isabelle Letrez",initials:"IL",title:"R&D Project Lead (Delicate Care)",company:"Christeyns",email:"isabelle.letrez@christeyns.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-21",source:"Recreaire Brochure Download"},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"Ana Oliveira",initials:"AO",title:"Project and Process Manager",company:"Clariant",email:"ana.oliveira@clariant.com",note:"",status:"target",engagements:[
+  {name:"Ana Oliveira",initials:"AO",title:"Project and Process Manager",company:"Clariant",email:"ana.oliveira@clariant.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-19",source:"Recreaire Brochure Download"},
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:0},
       {campaign_id:"pud_pr_r",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:3}
+      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0}
   ]},
-{name:"Dirk-Roland Kuppert",initials:"DK",title:"Innovation Project Manager",company:"Clariant",email:"dirkroland.kuppert@clariant.com",note:"",status:"target",engagements:[
+  {name:"Dirk-Roland Kuppert",initials:"DK",title:"Innovation Project Manager",company:"Clariant",email:"dirkroland.kuppert@clariant.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:2,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0}
   ]},
-{name:"Katie Wang",initials:"KW",title:"",company:"Clariant",email:"katie.wang@clariant.com",note:"",status:"target",engagements:[
+  {name:"Katie Wang",initials:"KW",title:"",company:"Clariant",email:"katie.wang@clariant.com",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
       {campaign_id:"polyols_mar",month:"2026-03",opens:2,clicks:0},
       {campaign_id:"web_form",month:"2026-02",opens:0,clicks:0,web_form:true,date:"2026-02-11",source:"Recreaire Brochure Download"},
-      {campaign_id:"pud_pr_r",month:"2026-06",opens:4,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"pud_pr_r",month:"2026-06",opens:4,clicks:0}
   ]},
-{name:"D.K. Todd",initials:"DT",title:"Global Product Manager Polyols (Commercial)",company:"Dow Chemical",email:"dktodd@dow.com",note:"",status:"target",engagements:[
+  {name:"D.K. Todd",initials:"DT",title:"Global Product Manager Polyols (Commercial)",company:"Dow Chemical",email:"dktodd@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"E. Quintanilla",initials:"EQ",title:"Global Mobility Marketing Director",company:"Dow Chemical",email:"equintanilla@dow.com",note:"",status:"target",engagements:[
+  {name:"E. Quintanilla",initials:"EQ",title:"Global Mobility Marketing Director",company:"Dow Chemical",email:"equintanilla@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:10,clicks:0},
-      {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"J.M. Palmieri",initials:"JP",title:"President Industrial Intermediates and Infrastructure",company:"Dow Chemical",email:"jmpalmieri@dow.com",note:"",status:"target",engagements:[
+  {name:"J.M. Palmieri",initials:"JP",title:"President Industrial Intermediates and Infrastructure",company:"Dow Chemical",email:"jmpalmieri@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"J. Penrice",initials:"JP",title:"President Mobility",company:"Dow Chemical",email:"jpenrice@dow.com",note:"",status:"target",engagements:[
+  {name:"J. Penrice",initials:"JP",title:"President Mobility",company:"Dow Chemical",email:"jpenrice@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"P. Cookson",initials:"PC",title:"Global Application Technology Leader",company:"Dow Chemical",email:"pcookson@dow.com",note:"",status:"target",engagements:[
+  {name:"P. Cookson",initials:"PC",title:"Global Application Technology Leader",company:"Dow Chemical",email:"pcookson@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:2,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"S. Nad",initials:"SN",title:"",company:"Dow Chemical",email:"snad@dow.com",note:"",status:"target",engagements:[
+  {name:"S. Nad",initials:"SN",title:"",company:"Dow Chemical",email:"snad@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:3,clicks:0},
-      {campaign_id:"surf_apr",month:"2026-04",opens:3,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"surf_apr",month:"2026-04",opens:3,clicks:0}
   ]},
-{name:"W.A. Koonce",initials:"WK",title:"Global Product Manager Polyols (Technical)",company:"Dow Chemical",email:"wakoonce@dow.com",note:"",status:"target",engagements:[
+  {name:"W.A. Koonce",initials:"WK",title:"Global Product Manager Polyols (Technical)",company:"Dow Chemical",email:"wakoonce@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:1}
+      {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"W. Yu",initials:"WY",title:"",company:"Dow Chemical",email:"wyu@dow.com",note:"",status:"target",engagements:[
+  {name:"W. Yu",initials:"WY",title:"",company:"Dow Chemical",email:"wyu@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:26,clicks:0}
   ]},
-{name:"Rick Theiner",initials:"RT",title:"Applied Technology Manager (Surfactant Science)",company:"Evonik",email:"rick.theiner@evonik.com",note:"",status:"target",engagements:[
+  {name:"Rick Theiner",initials:"RT",title:"Applied Technology Manager (Surfactant Science)",company:"Evonik",email:"rick.theiner@evonik.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:2,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:4,clicks:0}
   ]},
-{name:"Moritz Stanek",initials:"MS",title:"",company:"Henkel",email:"moritz.stanek@henkel.com",note:"",status:"target",engagements:[
+  {name:"Moritz Stanek",initials:"MS",title:"",company:"Henkel",email:"moritz.stanek@henkel.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-11",source:"Recreaire Brochure Download"},
       {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"Rolf Bayersdoerfer",initials:"RB",title:"Corporate Director, Open Innovation & New Business",company:"Henkel",email:"rolf.bayersdoerfer@henkel.com",note:"",status:"target",engagements:[
+  {name:"Rolf Bayersdoerfer",initials:"RB",title:"Corporate Director, Open Innovation & New Business",company:"Henkel",email:"rolf.bayersdoerfer@henkel.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-04",opens:0,clicks:0,web_form:true,date:"2026-04-24",source:"Recreaire Brochure Download"},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
       {campaign_id:"pud_pr_r",month:"2026-06",opens:5,clicks:0},
       {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"Veronica Tang",initials:"VT",title:"Regional Category Manager Purchasing",company:"Henkel",email:"veronica.tang@henkel.com",note:"",status:"target",engagements:[
+  {name:"Veronica Tang",initials:"VT",title:"Regional Category Manager Purchasing",company:"Henkel",email:"veronica.tang@henkel.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Ralf Ewering",initials:"RE",title:"Chief Sustainability Officer – Europe",company:"KLK Oleo",email:"ralf.ewering@klkoleo.com",note:"",status:"target",engagements:[
+  {name:"Ralf Ewering",initials:"RE",title:"Chief Sustainability Officer – Europe",company:"KLK Oleo",email:"ralf.ewering@klkoleo.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Steffen Bruells",initials:"SB",title:"Senior Researcher – Home Care",company:"Nouryon",email:"steffen.bruells@nouryon.com",note:"",status:"target",engagements:[
+  {name:"Steffen Bruells",initials:"SB",title:"Senior Researcher – Home Care",company:"Nouryon",email:"steffen.bruells@nouryon.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"web_form",month:"2026-01",opens:0,clicks:0,web_form:true,date:"2026-01-12",source:"Recreaire Brochure Download"}
   ]},
-{name:"Willem Rensink",initials:"WR",title:"Category Group Director – R&D Hygiene Home, Innovation Partnerships",company:"Reckitt",email:"willem.rensink@gmail.com",note:"",status:"target",engagements:[
+  {name:"Willem Rensink",initials:"WR",title:"Category Group Director – R&D Hygiene Home, Innovation Partnerships",company:"Reckitt",email:"willem.rensink@gmail.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-21",source:"Recreaire Brochure Download, Simon FoS 2026 Recreaire"},
-      {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:1},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:1}
   ]},
-{name:"Amol Hivrale",initials:"AH",title:"Business Leader – Biotech",company:"Rossari Biotech",email:"amol.hivrale@rossari.com",note:"",status:"target",engagements:[
+  {name:"Amol Hivrale",initials:"AH",title:"Business Leader – Biotech",company:"Rossari Biotech",email:"amol.hivrale@rossari.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:1},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"Sogo Yip",initials:"SY",title:"Manager, Business & Marketing Intelligence",company:"Sasol",email:"sogo.yip@sasol.com",note:"",status:"target",engagements:[
+  {name:"Sogo Yip",initials:"SY",title:"Manager, Business & Marketing Intelligence",company:"Sasol",email:"sogo.yip@sasol.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0}
   ]},
-{name:"Marcin Brzezinski",initials:"MB",title:"EU Technical Development Manager - European Polymers",company:"Stepan",email:"marcin.brzezinski@stepan.com",note:"",status:"target",engagements:[
+  {name:"Marcin Brzezinski",initials:"MB",title:"EU Technical Development Manager - European Polymers",company:"Stepan",email:"marcin.brzezinski@stepan.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:2,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:2,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
-      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
   ]},
-{name:"M. Knock",initials:"MK",title:"Research Associate – Surface, Colloid & Interface Formulations",company:"Stepan",email:"mknock@stepan.com",note:"",status:"target",engagements:[
+  {name:"M. Knock",initials:"MK",title:"Research Associate – Surface, Colloid & Interface Formulations",company:"Stepan",email:"mknock@stepan.com",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:3,clicks:0},
       {campaign_id:"polyols_mar",month:"2026-03",opens:3,clicks:0},
       {campaign_id:"web_form",month:"2026-01",opens:0,clicks:0,web_form:true,date:"2026-01-05",source:"Recreaire Brochure Download"},
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
       {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"R. Stubbs",initials:"RS",title:"Vice President, European Polymers",company:"Stepan",email:"rstubbs@stepan.com",note:"",status:"target",engagements:[
+  {name:"R. Stubbs",initials:"RS",title:"Vice President, European Polymers",company:"Stepan",email:"rstubbs@stepan.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
   ]},
-{name:"R. Iluka",initials:"RI",title:"",company:"Stepan",email:"riluka@stepan.com",note:"",status:"target",engagements:[
+  {name:"R. Iluka",initials:"RI",title:"",company:"Stepan",email:"riluka@stepan.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-06",opens:0,clicks:0,web_form:true,date:"2026-06-09",source:"Recreaire Brochure Download"}
   ]},
-{name:"Ian Howell",initials:"IH",title:"Homecare S&T Director – Advanced Materials and Surface Science",company:"Unilever",email:"ian.howell@unilever.com",note:"",status:"target",engagements:[
+  {name:"Masako Abe",initials:"MA",title:"",company:"Toyota Tsusho",email:"masako_abe@toyota-tsusho.com",note:"",status:"extended",engagements:[
+      {campaign_id:"web_form",month:"2026-06",opens:0,clicks:0,web_form:true,date:"2026-06-09",source:"Recreaire Brochure Download"}
+  ]},
+  {name:"Ian Howell",initials:"IH",title:"Homecare S&T Director – Advanced Materials and Surface Science",company:"Unilever",email:"ian.howell@unilever.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Martin Crossman",initials:"MC",title:"Technology Manager, Lead Scientist",company:"Unilever",email:"martin.crossman@unilever.com",note:"",status:"target",engagements:[
+  {name:"Martin Crossman",initials:"MC",title:"Technology Manager, Lead Scientist",company:"Unilever",email:"martin.crossman@unilever.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:51,clicks:2},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Serge Yeterian",initials:"SY",title:"EMEA Market Segment Director – Home Care & Industrial Cleaning",company:"Azelis",email:"serge.yeterian@azelis.com",note:"",status:"extended",engagements:[
+  {name:"Serge Yeterian",initials:"SY",title:"EMEA Market Segment Director – Home Care & Industrial Cleaning",company:"Azelis",email:"serge.yeterian@azelis.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:3,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
       {campaign_id:"web_form",month:"2026-01",opens:0,clicks:0,web_form:true,date:"2026-01-14",source:"Recreaire Brochure Download"}
   ]},
-{name:"Andrea Luraghi",initials:"AL",title:"R&D and QC Manager",company:"COIM Group",email:"andrea.luraghi@coimgroup.com",note:"",status:"extended",engagements:[
+  {name:"Andrea Luraghi",initials:"AL",title:"R&D and QC Manager",company:"COIM Group",email:"andrea.luraghi@coimgroup.com",note:"",status:"extended",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:3,clicks:0}
   ]},
-{name:"Stefania Nardin",initials:"SN",title:"Technologist - Cast Elastomers",company:"LANXESS",email:"stefania.nardin@lanxess.com",note:"",status:"extended",engagements:[
+  {name:"Stefania Nardin",initials:"SN",title:"Technologist - Cast Elastomers",company:"LANXESS",email:"stefania.nardin@lanxess.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0}
   ]},
-{name:"Kos Tanaka",initials:"KT",title:"Deputy General Manager Project Development Dept",company:"Mitsui",email:"kos.tanaka@mitsui.com",note:"",status:"extended",engagements:[
+  {name:"Kos Tanaka",initials:"KT",title:"Deputy General Manager Project Development Dept",company:"Mitsui",email:"kos.tanaka@mitsui.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0}
   ]},
-{name:"Eisuke Akabane",initials:"EA",title:"",company:"Mitsui Chemicals",email:"eisuke.akabane@mitsuichemicals.com",note:"",status:"extended",engagements:[
+  {name:"Eisuke Akabane",initials:"EA",title:"",company:"Mitsui Chemicals",email:"eisuke.akabane@mitsuichemicals.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_apr",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:3,clicks:14}
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
   ]},
-{name:"Yusaku Shin",initials:"YS",title:"Section Manager, Production Technologies Sect",company:"Mitsui Chemicals",email:"yusaku.shin@mitsuichemicals.com",note:"",status:"extended",engagements:[
+  {name:"Yusaku Shin",initials:"YS",title:"Section Manager, Production Technologies Sect",company:"Mitsui Chemicals",email:"yusaku.shin@mitsuichemicals.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
-{name:"Bartosz Bańkowski",initials:"BB",title:"Director – New Technology Development",company:"PCC Rokita",email:"bartosz.bankowski@pcc.eu",note:"",status:"extended",engagements:[
+  {name:"Bartosz Bańkowski",initials:"BB",title:"Director – New Technology Development",company:"PCC Rokita",email:"bartosz.bankowski@pcc.eu",note:"",status:"extended",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:4,clicks:0}
   ]},
-{name:"Suleyman Kudret",initials:"SK",title:"Resin and Coating Specialist",company:"Perstorp",email:"suleyman.kudret@perstorp.com",note:"",status:"extended",engagements:[
+  {name:"Suleyman Kudret",initials:"SK",title:"Resin and Coating Specialist",company:"Perstorp",email:"suleyman.kudret@perstorp.com",note:"",status:"extended",engagements:[
       {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-19",source:"Recreaire Brochure Download"},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:2},
       {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:2},
       {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:4}
   ]},
-{name:"Harry Kettle",initials:"HK",title:"Investment Associate, Shell Ventures",company:"Shell",email:"harry.kettle@shell.com",note:"",status:"extended",engagements:[
+  {name:"Harry Kettle",initials:"HK",title:"Investment Associate, Shell Ventures",company:"Shell",email:"harry.kettle@shell.com",note:"",status:"extended",engagements:[
       {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-05",source:"Recreaire Brochure Download"},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
       {campaign_id:"pud_pr_r",month:"2026-06",opens:1,clicks:0},
       {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"Benedict Invergo",initials:"BI",title:"R&D and Product Development Manager",company:"Sherwin-Williams",email:"benedict.j.invergo@sherwin.com",note:"",status:"extended",engagements:[
+  {name:"Benedict Invergo",initials:"BI",title:"R&D and Product Development Manager",company:"Sherwin-Williams",email:"benedict.j.invergo@sherwin.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:2,clicks:0},
       {campaign_id:"web_form",month:"2026-03",opens:0,clicks:0,web_form:true,date:"2026-03-25",source:"Recreaire Brochure Download"},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:4},
       {campaign_id:"europur_b",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:2,clicks:4}
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
   ]},
-{name:"A. Brook",initials:"AB",title:"Account Manager – Personal Care Ingredients",company:"Surfachem",email:"abrook@surfachem.com",note:"",status:"extended",engagements:[
+  {name:"A. Brook",initials:"AB",title:"Account Manager – Personal Care Ingredients",company:"Surfachem",email:"abrook@surfachem.com",note:"",status:"extended",engagements:[
       {campaign_id:"web_form",month:"2026-03",opens:0,clicks:0,web_form:true,date:"2026-03-22",source:"Recreaire Brochure Download"},
       {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:2}
+      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"Patricia O\'Brien",initials:"PO",title:"Chief Sustainability Officer",company:"Teknor Apex",email:"pobrien@teknorapex.com",note:"",status:"extended",engagements:[
+  {name:"Patricia O\'Brien",initials:"PO",title:"Chief Sustainability Officer",company:"Teknor Apex",email:"pobrien@teknorapex.com",note:"",status:"extended",engagements:[
       {campaign_id:"web_form",month:"2026-01",opens:0,clicks:0,web_form:true,date:"2026-01-05",source:""}
   ]},
-{name:"Pardorn Nutprasasn",initials:"PN",title:"Head of Engineering - Oleochemicals",company:"ThyssenKrupp",email:"pardorn.nutprasasn@thyssenkrupp.com",note:"",status:"extended",engagements:[
+  {name:"Pardorn Nutprasasn",initials:"PN",title:"Head of Engineering - Oleochemicals",company:"ThyssenKrupp",email:"pardorn.nutprasasn@thyssenkrupp.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
-{name:"Shuo Zhang",initials:"SZ",title:"Head of BD and Sales China",company:"ThyssenKrupp",email:"shuo.zhang@thyssenkrupp.com",note:"",status:"extended",engagements:[
+  {name:"Shuo Zhang",initials:"SZ",title:"Head of BD and Sales China",company:"ThyssenKrupp",email:"shuo.zhang@thyssenkrupp.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
-{name:"Varun Rikhi",initials:"VR",title:"PU R&D",company:"Shell",email:"varun.rikhi@shell.com",note:"",status:"extended",engagements:[
+  {name:"Varun Rikhi",initials:"VR",title:"PU R&D",company:"Shell",email:"varun.rikhi@shell.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
   ]},
-{name:"Richard Mauldon",initials:"RM",title:"Area Sales Manager – European Polymers",company:"Stepan",email:"richard.mauldon@stepaneurope.com",note:"",status:"target",engagements:[
+  {name:"Richard Mauldon",initials:"RM",title:"Area Sales Manager – European Polymers",company:"Stepan",email:"richard.mauldon@stepaneurope.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
   ]},
-{name:"Joe Mahoney",initials:"JM",title:"EU Technical Development Specialist",company:"Stepan",email:"joe.mahoney@stepaneurope.com",note:"",status:"target",engagements:[
-      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
+  {name:"Joe Mahoney",initials:"JM",title:"EU Technical Development Specialist",company:"Stepan",email:"joe.mahoney@stepaneurope.com",note:"",status:"target",engagements:[
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
   ]},
-{name:"Louis Snyders",initials:"LS",title:"Vice President, Care Chemicals",company:"Sasol",email:"louis.snyders@us.sasol.com",note:"",status:"target",engagements:[
+  {name:"Louis Snyders",initials:"LS",title:"Vice President, Care Chemicals",company:"Sasol",email:"louis.snyders@us.sasol.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
   ]},
-{name:"Nick Brennan",initials:"NB",title:"Global Director R&D Care Chemicals",company:"Sasol",email:"nick.brennan@us.sasol.com",note:"",status:"extended",engagements:[
+  {name:"Nick Brennan",initials:"NB",title:"Global Director R&D Care Chemicals",company:"Sasol",email:"nick.brennan@us.sasol.com",note:"",status:"extended",engagements:[
       {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:0}
   ]},
-{name:"Mathilde Duval",initials:"MD",title:"Outsourcing and Partners Manager",company:"L'Oreal",email:"mathilde.duval@loreal.com",note:"",status:"target",engagements:[
+  {name:"Mathilde Duval",initials:"MD",title:"Outsourcing and Partners Manager",company:"L'Oreal",email:"mathilde.duval@loreal.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-06",opens:0,clicks:0,web_form:true,date:"2026-06-19",source:"Recreaire Brochure Download"}
-  ]},
-{name:"Bilal Ahmad",initials:"BA",title:"Principal, Shell Ventures",company:"Shell",email:"bilal.ahmad@shell.com",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:14,clicks:0}
-  ]},
-{name:"David Matuschek",initials:"DM",title:"Lab Head, Adhesive Resins",company:"Covestro",email:"david.matuschek@covestro.com",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:2,clicks:0}
-  ]},
-{name:"Eric Dumain",initials:"ED",title:"Global Marketing Director, Liquid Coating Resins",company:"Arkema",email:"eric.dumain@arkema.com",note:"",status:"target",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:4,clicks:0}
-  ]},
-{name:"Giuseppe Librandi",initials:"GL",title:"CEO",company:"COIM Group",email:"giuseppe.librandi@coimgroup.com",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Hart Haugen",initials:"HH",title:"R&D Staff Scientist",company:"Sherwin-Williams",email:"hart.haugen@sherwin.com",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:5,clicks:0}
-  ]},
-{name:"Igor Korczagin",initials:"IK",title:"R&D Director, polyols",company:"PCC Rokita",email:"igor.korczagin@pcc.eu",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Kamin Nosratian",initials:"KN",title:"CEO",company:"Polymax International Canada",email:"kamin.nosratian@gmail.com",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Megumu Sakamoto",initials:"MS",title:"",company:"BASF",email:"megumu.sakamoto@basf-inoac-polyurethanes.co.jp",note:"",status:"target",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Michael Schneider",initials:"MS",title:"IP",company:"Covestro",email:"michaelernst.schneider@covestro.com",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:2,clicks:0}
-  ]},
-{name:"Peter Gebauer",initials:"PG",title:"Global Product Manager - TDI & Polyether",company:"Covestro",email:"peter.gebauer@covestro.com",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:4,clicks:0}
-  ]},
-{name:"Paul Mackey",initials:"PM",title:"VP R&D (former), Huntsman Building Solutions",company:"Huntsman",email:"pmackey@huntsmanbuilds.com",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Sergiusz Stefanowski",initials:"SS",title:"Director Polyols Business Unit",company:"PCC Rokita",email:"sergiusz.stefanowski@pcc.eu",note:"",status:"extended",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-{name:"Zheng Wu",initials:"ZW",title:"Marketing Manager – Footwear, Sports & Leisure",company:"BASF",email:"zheng.wu@basf.com",note:"",status:"target",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:3,clicks:0}
-  ]},
-  {name:"AJ Nunez",initials:"AJ",title:"",company:"Dow",email:"ajnunez@dow.com",note:"",status:"target",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Edis Kasemi",initials:"EK",title:"R&D Senior Scientist",company:"Sika",email:"kasemi.edis@ch.sika.com",note:"",status:"target",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:2,clicks:0}
-  ]},
-  {name:"Marcelle Moeller",initials:"MM",title:"Global Sustainability Director Dow Polyurethanes",company:"Dow",email:"mmoeller@dow.com",note:"",status:"target",engagements:[
-      {campaign_id:"supply_chain_jul",month:"2026-07",opens:1,clicks:0}
   ]}
 ];
 

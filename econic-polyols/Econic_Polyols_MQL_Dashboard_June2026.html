@@ -231,8 +231,6 @@ tbody td{padding:9px 12px;vertical-align:middle}
   <div class="archive-footer">
   <span class="archive-footer-label">Archive</span>
   <a class="archive-link" href="Econic_Polyols_MQL_Dashboard_May2026.html">May 2026</a>
-  <a class="archive-link" href="Econic_Polyols_MQL_Dashboard_June2026.html">June 2026</a>
-  <a class="archive-link" href="Econic_Polyols_MQL_Dashboard_July2026.html">July 2026</a>
 </div>
 
 <div class="footer-left">MMPA for Econic Technologies Ltd &middot; Polyols MQL Dashboard &middot; <span id="footer-date"></span></div>
@@ -254,9 +252,9 @@ if (new URLSearchParams(window.location.search).get("admin")==="true") {
 const APPS_SCRIPT_URL = "https://tools.macallenmedia.com/.netlify/functions/mql-status";
 const DASHBOARD_ID    = "econic-polyols";  // unique ID per dashboard
 
-const REPORT_PERIOD  = "August 2026";
-const CURRENT_MONTH  = "2026-08";
-const PREV_MONTH     = "2026-07";
+const REPORT_PERIOD  = "June 2026";
+const CURRENT_MONTH  = "2026-06";
+const PREV_MONTH     = "2026-05";
 
 // Scoring weights
 const SCORE = {
@@ -282,7 +280,6 @@ const CAMPAIGNS = {
   pud_pr_r:     {label:"PUD Press Release",                                month:"2026-06"},
   polyols_jun:  {label:"Polyols PUD Brochure",                             month:"2026-06"},
   polyols_jun_r:{label:"Polyols PUD Brochure",                             month:"2026-06"},
-  polyols_jul: {label:"TechnoBiz/APUA Polyols Presentation", month:"2026-07"},
 };
 
 // Company status: "target" = Simon's list (green), "extended" = industry-relevant (yellow)
@@ -400,6 +397,7 @@ const COMPANIES = {
 };
 
 const CONTACTS = [
+  // Added Jul 2026 — moved over from Surfactants MQL dashboard (PUD Brochure / Europur engagement only, no surfactants signal)
   {name:"Frank Cogordan",initials:"FC",title:"Development & Innovation Leader, Specialties and Industrial Coatings",company:"Arkema",email:"frank.cogordan@arkema.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
@@ -419,8 +417,7 @@ const CONTACTS = [
   {name:"Eric Dumain",initials:"ED",title:"Global Marketing Director, Liquid Coating Resins",company:"Arkema",email:"eric.dumain@arkema.com",note:"",status:"target",engagements:[
       {campaign_id:"jun_cta",month:"2026-06",opens:3,clicks:0},
       {campaign_id:"polyols_jun",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"pud_pr",month:"2026-06",opens:3,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"pud_pr",month:"2026-06",opens:3,clicks:0}
   ]},
   {name:"David Matuschek",initials:"DM",title:"Lab Head, Adhesive Resins",company:"Covestro",email:"david.matuschek@covestro.com",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:4,clicks:0},
@@ -428,8 +425,7 @@ const CONTACTS = [
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:0},
       {campaign_id:"pud_pr",month:"2026-06",opens:6,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:3,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:3,clicks:0}
   ]},
   {name:"Hart Haugen",initials:"HH",title:"R&D Staff Scientist",company:"Sherwin-Williams",email:"hart.haugen@sherwin.com",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
@@ -437,8 +433,7 @@ const CONTACTS = [
       {campaign_id:"surf_may",month:"2026-05",opens:6,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:10,clicks:0},
       {campaign_id:"pud_pr_r",month:"2026-06",opens:4,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:4,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:6,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:4,clicks:0}
   ]},
   {name:"Pierre Larnicol",initials:"PL",title:"Director – Global Marketing & Sustainable Offer, Acrylic Monomers",company:"Arkema",email:"pierre.larnicol@arkema.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -460,8 +455,7 @@ const CONTACTS = [
   {name:"A.J. Nunez",initials:"AN",title:"",company:"Dow",email:"ajnunez@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
-      {campaign_id:"pud_pr_r",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"pud_pr_r",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"K.J. Meyer",initials:"KM",title:"",company:"Dow",email:"kjmeyer@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -515,8 +509,7 @@ const CONTACTS = [
       {campaign_id:"surf_may",month:"2026-05",opens:4,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:2},
       {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"europur_b",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"europur_b",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Chris Averis",initials:"CA",title:"Chief Technology Officer",company:"Manali Petrochemicals",email:"chris.averis@notedome.co.uk",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
@@ -553,8 +546,7 @@ const CONTACTS = [
       {campaign_id:"polyols_mar",month:"2026-03",opens:4,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:3,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"polyols_jun_r",month:"2026-06",opens:10,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"polyols_jun_r",month:"2026-06",opens:10,clicks:0}
   ]},
   {name:"Jana Kawecki",initials:"JK",title:"",company:"BMW",email:"jana@bmwstartupgarage.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -573,8 +565,7 @@ const CONTACTS = [
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:9,clicks:0},
       {campaign_id:"polyols_jun",month:"2026-06",opens:7,clicks:0},
-      {campaign_id:"pud_pr",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"pud_pr",month:"2026-06",opens:2,clicks:0}
   ]},
   {name:"Andreas Kramer",initials:"AK",title:"Principal Scientist - Department Manager Intermediates",company:"Sika",email:"kramer.andreas@ch.sika.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -590,25 +581,21 @@ const CONTACTS = [
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:8,clicks:0},
       {campaign_id:"pud_pr",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0}
   ]},
   {name:"Mikaela Madden",initials:"MM",title:"R&D Chemist",company:"INOAC",email:"mikaela.madden@inoacusa.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:2},
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"pud_pr_r",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:4,clicks:1}
+      {campaign_id:"pud_pr_r",month:"2026-06",opens:2,clicks:0}
   ]},
   {name:"Mike Murray",initials:"MM",title:"Chief Technology Officer",company:"The Vita Group",email:"mike.murray@thevitagroup.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Marcelle Moeller",initials:"MM",title:"Global Sustainability Director Dow Polyurethanes",company:"Dow",email:"mmoeller@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Ao Nobuhiro",initials:"AN",title:"",company:"Sanyo",email:"n.ao@sanyo-chemical.group",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:3,clicks:0},
@@ -616,13 +603,11 @@ const CONTACTS = [
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
       {campaign_id:"polyols_jun_r",month:"2026-06",opens:2,clicks:0},
       {campaign_id:"polyols_jun",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
   ]},
   {name:"Paul Fitzgerald",initials:"PF",title:"Consultant",company:"Manali Petrochemicals",email:"paul@notedome.co.uk",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Peter Gebauer",initials:"PG",title:"Global Product Manager - TDI & Polyether",company:"Covestro",email:"peter.gebauer@covestro.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:3,clicks:0},
@@ -635,8 +620,7 @@ const CONTACTS = [
   {name:"Paul Mackey",initials:"PM",title:"VP R&D (former), Huntsman Building Solutions",company:"Huntsman",email:"pmackey@huntsmanbuilds.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Shinji Hirayama",initials:"SH",title:"Global technology Headquarter",company:"INOAC",email:"shinji.hirayama@inoac.co.jp",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -649,21 +633,18 @@ const CONTACTS = [
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
       {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Takuya Kiriyama",initials:"TK",title:"Executive Officer Engineering Department",company:"INOAC",email:"takuya.kiriyama@inoac.co.jp",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:5,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:4,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:0},
       {campaign_id:"pud_pr",month:"2026-06",opens:6,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:5,clicks:2},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:5,clicks:2}
   ]},
   {name:"Tim Kidd",initials:"TK",title:"Senior Open Innovation Account Manager",company:"Stahl",email:"tim.kidd@stahl.com",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"pud_pr",month:"2026-06",opens:2,clicks:2},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:2}
+      {campaign_id:"pud_pr",month:"2026-06",opens:2,clicks:2}
   ]},
   {name:"Toshiharu Tokoro",initials:"TT",title:"New Development Technical Center Foam System Division",company:"INOAC",email:"toshiharu.tokoro@basf-inoac-polyurethanes.co.jp",note:"",status:"target",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -695,8 +676,7 @@ const CONTACTS = [
   ]},
   {name:"Attila Beres",initials:"AB",title:"Head of Group Polyol Commerce",company:"MOL",email:"atberes@mol.hu",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"jun_cta",month:"2026-06",opens:0,clicks:2},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"jun_cta",month:"2026-06",opens:0,clicks:2}
   ]},
   {name:"Hugues Van den Bergen",initials:"HV",title:"CASE",company:"Allnex",email:"hugues.vandenbergen@allnex.com",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:78,clicks:0}
@@ -718,8 +698,7 @@ const CONTACTS = [
   {name:"Gustavo Marques",initials:"GM",title:"R&D Manager",company:"Flexipol",email:"gustavo.marques@flexipol.com",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:3,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:1},
-      {campaign_id:"europur_win",month:"2026-06",opens:0,clicks:1},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:0,clicks:1}
   ]},
   {name:"Jon Penrice",initials:"JP",title:"President Mobility",company:"Dow",email:"jpenrice@dow.com",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
@@ -727,16 +706,13 @@ const CONTACTS = [
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Nalini Kelly",initials:"NK",title:"Acquisitions and Partnership Manager Care Chemicals - North America",company:"BASF",email:"nalini.kelly@basf.com",note:"",status:"target",engagements:[
-      {campaign_id:"changhua",month:"2026-04",opens:11,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"changhua",month:"2026-04",opens:11,clicks:0}
   ]},
   {name:"Paul Cookson",initials:"PC",title:"Global Application Technology Leader",company:"Dow",email:"pcookson@dow.com",note:"",status:"target",engagements:[
-      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
   ]},
   {name:"Ruth Lohwasser",initials:"RL",title:"Group Leader Polyols Technical",company:"BASF",email:"ruth.lohwasser@basf.com",note:"",status:"target",engagements:[
-      {campaign_id:"changhua",month:"2026-04",opens:55,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:2}
+      {campaign_id:"changhua",month:"2026-04",opens:55,clicks:0}
   ]},
   {name:"Scott Pugh",initials:"SP",title:"Vice President Global R&D/Sustainability",company:"Carpenter",email:"scott.pugh@carpenter.com",note:"",status:"target",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:25,clicks:0}
@@ -750,8 +726,7 @@ const CONTACTS = [
       {campaign_id:"polyols_jun",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Esther Quintanilla",initials:"EQ",title:"Global Mobility Marketing Director",company:"Dow",email:"equintanilla@dow.com",note:"",status:"target",engagements:[
-      {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"changhua_r",month:"2026-04",opens:1,clicks:0}
   ]},
   {name:"Simon Simonsen",initials:"SS",title:"PU Lab Manager - Innovation and Development",company:"Tempur Sealy",email:"simon.simonsen@tempursealy.com",note:"",status:"target",engagements:[
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
@@ -785,8 +760,7 @@ const CONTACTS = [
   {name:"Todd Wishneski",initials:"TW",title:"",company:"NCFI Polyurethanes",email:"todd.wishneski@ncfi.net",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:2,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
   ]},
   {name:"Ana Montenegro",initials:"AM",title:"",company:"Repsol",email:"amontenegrog@repsol.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -809,8 +783,7 @@ const CONTACTS = [
       {campaign_id:"surf_may",month:"2026-05",opens:16,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:4,clicks:0},
       {campaign_id:"pud_pr",month:"2026-06",opens:18,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:3,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:6,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:3,clicks:0}
   ]},
   {name:"Carlotta Cortelli",initials:"CC",title:"Group R&D and Catalyst Director",company:"Polynt S.p.a",email:"carlotta.cortelli@polynt.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
@@ -834,20 +807,17 @@ const CONTACTS = [
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:4,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:5},
-      {campaign_id:"polyols_jun_r",month:"2026-06",opens:3,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:1}
+      {campaign_id:"polyols_jun_r",month:"2026-06",opens:3,clicks:0}
   ]},
   {name:"Don Philips",initials:"DP",title:"",company:"Monument Chemical",email:"dphillips@monumentchemical.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"polyols_jun",month:"2026-06",opens:3,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"polyols_jun",month:"2026-06",opens:3,clicks:0}
   ]},
   {name:"Eric Driskel",initials:"ED",title:"Sr. Formulating Chemist",company:"Foam supplies Inc",email:"edriskel@foamsupplies.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"europur_b",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"europur_b",month:"2026-06",opens:2,clicks:0}
   ]},
   {name:"Paco Rodriguez",initials:"PR",title:"R&D Chemical Application Dev. Manager",company:"UBE Corporation Europe",email:"f.rodriguez@ube.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -863,8 +833,7 @@ const CONTACTS = [
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:14},
       {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:11},
       {campaign_id:"pud_pr",month:"2026-06",opens:2,clicks:11},
-      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:9},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:1}
+      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:9}
   ]},
   {name:"Herman Reezigt",initials:"HR",title:"Manager Research & Development",company:"Plixxent",email:"herman.reezigt@plixxent.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
@@ -884,8 +853,7 @@ const CONTACTS = [
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
   {name:"Jim E Smith II",initials:"JS",title:"Senior Account Manager",company:"Monument Chemical",email:"jsmith@monumentchemical.com",note:"",status:"extended",engagements:[
-      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
   {name:"MASAHIKO KANEMITSU",initials:"MK",title:"Development Sales Representative",company:"MEIWA CORPORATION",email:"m-kanemitsu@meiwa.co.jp",note:"",status:"extended",engagements:[
       {campaign_id:"web_form",month:"2026-06",opens:0,clicks:0,web_form:true,date:"2026-06-19",source:"Richard Europur 2026 Presentation"},
@@ -894,22 +862,19 @@ const CONTACTS = [
       {campaign_id:"pud_pr_r",month:"2026-06",opens:4,clicks:0},
       {campaign_id:"pud_pr",month:"2026-06",opens:2,clicks:0},
       {campaign_id:"europur_win",month:"2026-06",opens:8,clicks:1},
-      {campaign_id:"surf_may",month:"2026-05",opens:4,clicks:4},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:1}
+      {campaign_id:"surf_may",month:"2026-05",opens:4,clicks:4}
   ]},
   {name:"Makoto Nishikawa",initials:"MN",title:"",company:"Nicca Chemical Co. Ltd",email:"m-nishikawa@niccachemical.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
   {name:"Manuel Asensio",initials:"MA",title:"Construction and Renewable Energies Group",company:"AIMPLAS",email:"masensio@aimplas.es",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Manabu Eto",initials:"ME",title:"Director, Overseas Business",company:"Nitto Kasei Co,, Ltd",email:"meto@nittokasei.co.jp",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:3,clicks:0}
+      {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:0}
   ]},
   {name:"Mladen Vidakovic",initials:"MV",title:"Manager Technical Service",company:"Evonik",email:"mladen.vidakovic@evonik.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:1},
@@ -932,8 +897,7 @@ const CONTACTS = [
       {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:4,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:4,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:3,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0}
   ]},
   {name:"Rebecca Magni",initials:"RM",title:"",company:"CO2 Value Europe",email:"rebecca.magni@co2value.eu",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -941,8 +905,7 @@ const CONTACTS = [
   ]},
   {name:"Rob Einterz",initials:"RE",title:"",company:"Monument Chemical",email:"roberte@monumentchemical.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"polyols_jun_r",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"polyols_jun_r",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Ryohei Koguchi",initials:"RK",title:"",company:"Asahi Glass Corporation",email:"ryohei.koguchi@agc.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -971,20 +934,17 @@ const CONTACTS = [
       {campaign_id:"jun_cta",month:"2026-06",opens:4,clicks:0},
       {campaign_id:"pud_pr",month:"2026-06",opens:2,clicks:0},
       {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
   ]},
   {name:"Sibel Selcuk",initials:"SS",title:"",company:"Monument Chemical",email:"sselcuk@monumentchemical.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"polyols_jun_r",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"polyols_jun_r",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Sumate Charoenchaidet",initials:"SC",title:"Head of Central Research and Development",company:"SCG Chemicals Co. Ltd",email:"sumatec@scg.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0}
   ]},
   {name:"Suracha Udomsak",initials:"SU",title:"CTO - Innovation and Technology",company:"SCG Chemicals Co. Ltd",email:"surachau@scg.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
@@ -1004,8 +964,7 @@ const CONTACTS = [
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
   ]},
   {name:"Todd Keske",initials:"TK",title:"Owner",company:"Foam supplies Inc",email:"tkeske@foamsupplies.com",note:"",status:"extended",engagements:[
-      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
   ]},
   {name:"Thomas McGauran",initials:"TM",title:"",company:"Jaguar Land Rover",email:"tmcgaura@jaguarlandrover.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
@@ -1021,8 +980,7 @@ const CONTACTS = [
   {name:"Yosuke Miyake",initials:"YM",title:"R&D",company:"Toyoda Gosei",email:"yosuke.miyake@toyoda-gosei.co.jp",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0},
       {campaign_id:"changhua",month:"2026-04",opens:3,clicks:0},
-      {campaign_id:"pud_pr_r",month:"2026-06",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"pud_pr_r",month:"2026-06",opens:2,clicks:0}
   ]},
   {name:"Shin Yusaku",initials:"SY",title:"Section Manager, Production Technologies Sect",company:"Mitsui Chemicals Inc.",email:"yusaku.shin@mitsuichemicals.com",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_mar",month:"2026-03",opens:1,clicks:0}
@@ -1046,8 +1004,7 @@ const CONTACTS = [
   ]},
   {name:"Shintaro Okawa",initials:"SO",title:"General Manager Material R&D Dept",company:"Toyoda Gosei",email:"shintaro.okawa@toyoda-gosei.co.jp",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_r",month:"2026-03",opens:1,clicks:0},
-      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0}
   ]},
   {name:"Volodymyr Kuznetsov",initials:"VK",title:"Material Science Specialist Application Engineering and Technical Service",company:"Daikin",email:"volodymyr.kuznetsov@daikinchem.de",note:"",status:"extended",engagements:[
       {campaign_id:"polyols_r",month:"2026-03",opens:1,clicks:0},
@@ -1077,8 +1034,7 @@ const CONTACTS = [
   ]},
   {name:"Joe Mahoney",initials:"JM",title:"EU Technical Development Specialist",company:"Stepan",email:"joe.mahoney@stepaneurope.com",note:"",status:"extended",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:4,clicks:0},
-      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
   ]},
   {name:"Kosuke Tanaka",initials:"KT",title:"Deputy General Manager Project Development Dept",company:"Mitsui and Co. Europe Plc",email:"kos.tanaka@mitsui.com",note:"",status:"extended",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0}
@@ -1090,8 +1046,7 @@ const CONTACTS = [
   ]},
   {name:"Marcin Brzezinski",initials:"MB",title:"EU Technical Development Manager - European Polymers",company:"Stepan",email:"marcin.brzezinski@stepan.com",note:"",status:"extended",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:2,clicks:0},
-      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0}
   ]},
   {name:"Richard Mauldon",initials:"RM",title:"Area Sales Manager - European Polymers",company:"Stepan",email:"richard.mauldon@stepaneurope.com",note:"",status:"extended",engagements:[
       {campaign_id:"changhua",month:"2026-04",opens:1,clicks:0},
@@ -1113,12 +1068,10 @@ const CONTACTS = [
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
       {campaign_id:"polyols_jun",month:"2026-06",opens:2,clicks:0},
       {campaign_id:"pud_pr_r",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:1}
+      {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Varun Rikhi",initials:"VR",title:"PU Rand D",company:"Shell",email:"varun.rikhi@shell.com",note:"",status:"extended",engagements:[
-      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0}
   ]},
   {name:"Tim Dixon",initials:"TD",title:"",company:"Piedmont Chemical Industries",email:"tdixon@piedmontchemical.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
@@ -1131,15 +1084,13 @@ const CONTACTS = [
   ]},
   {name:"Ratchadaporn Yodthong",initials:"RY",title:"Business Development Manager",company:"Thyssenkrupp Industrial Solutions (Thailand) Ltd.",email:"ratchadaporn.yodthong@thyssenkrupp.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_may",month:"2026-05",opens:2,clicks:0},
-      {campaign_id:"pud_pr",month:"2026-06",opens:5,clicks:3},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"pud_pr",month:"2026-06",opens:5,clicks:3}
   ]},
   {name:"Helene Deliniere",initials:"HD",title:"PU Coatings",company:"Decathlon",email:"helene.deliniere@decathlon.com",note:"",status:"extended",engagements:[
       {campaign_id:"surf_may",month:"2026-05",opens:1,clicks:0},
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0},
       {campaign_id:"polyols_jun",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
+      {campaign_id:"pud_pr",month:"2026-06",opens:1,clicks:0}
   ]},
   {name:"Juergen Tropsch",initials:"JT",title:"Senior Principal Scientist, Global Competence Center Surfactants",company:"BASF",email:"juergen.tropsch@basf.com",note:"",status:"extended",engagements:[
       {campaign_id:"jun_cta",month:"2026-06",opens:1,clicks:0}
@@ -1186,9 +1137,9 @@ const CONTACTS = [
   {name:"Tom Mikkelsen",initials:"TM",title:"Master Technology Scout, Global Technology and Sourcing (former)",company:"Tempur Sealy",email:"tom.mikkelsen@tempursealy.com",note:"",status:"target",engagements:[
       {campaign_id:"europur_win",month:"2026-06",opens:2,clicks:0}
   ]},
+  // Web form contacts — added Jan 2026 onwards
   {name:"D. Hill",initials:"DH",title:"",company:"Rubberlite",email:"dhill@rubberlite.com",note:"",status:"extended",engagements:[
-      {campaign_id:"web_form",month:"2026-04",opens:0,clicks:0,web_form:true,date:"2026-04-08",source:"Sample Formulation Download"},
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
+      {campaign_id:"web_form",month:"2026-04",opens:0,clicks:0,web_form:true,date:"2026-04-08",source:"Sample Formulation Download"}
   ]},
   {name:"Fernando",initials:"F",title:"",company:"Transquimica del Peru",email:"fernando@transquimicadelperu.com",note:"",status:"extended",engagements:[
       {campaign_id:"web_form",month:"2026-05",opens:0,clicks:0,web_form:true,date:"2026-05-25",source:"Sample Formulation Download"}
@@ -1216,78 +1167,6 @@ const CONTACTS = [
   ]},
   {name:"Taylor Godsey",initials:"TG",title:"",company:"Carpenter",email:"taylor.godsey@carpenter.com",note:"",status:"target",engagements:[
       {campaign_id:"web_form",month:"2026-06",opens:0,clicks:0,web_form:true,date:"2026-06-17",source:"Richard Europur 2026 Presentation"}
-  ]},
-  {name:"Andreas Meyer",initials:"AM",title:"Technical Manager Flexible Packaging EMEA",company:"HB Fuller",email:"andreas.meyer@hbfuller.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Bradford Beauchamp",initials:"BB",title:"CEO/President",company:"Carpenter",email:"brad.beauchamp@carpenter.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
-  ]},
-  {name:"Doug Todd",initials:"DT",title:"Global Product Manager Polyols (Commercial)",company:"Dow",email:"dktodd@dow.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Eileen Lancaster",initials:"EL",title:"",company:"Kimpur",email:"eileen.lancaster@kimpur.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
-  ]},
-  {name:"Elvedin Sarajcic",initials:"ES",title:"",company:"Tempur Sealy",email:"elvedin.sarajcic@tempursealy.com",note:"",status:"target",engagements:[
-      {campaign_id:"web_form",month:"2026-07",opens:0,clicks:0,web_form:true,date:"2026-07-20",source:"Richard Europur 2026 Presentation"}
-  ]},
-  {name:"Franco Gabrieli",initials:"FG",title:"Application Segment Manager - Polyol, Rigid and CASE",company:"MOL",email:"franco.gabrieli@molgroupitaly.it",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Hong Xu",initials:"HX",title:"Global Technical Service Manager",company:"Cardolite",email:"hxu@cardolite.com",note:"",status:"extended",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
-  ]},
-  {name:"Igor Korczagin",initials:"IK",title:"R&D Director, polyols",company:"PCC Rokita",email:"igor.korczagin@pcc.eu",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Inan Sahin",initials:"IS",title:"Research and Development Manager Footwear",company:"Kimpur",email:"inan.sahin@kimpur.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Isak Mizrahi",initials:"IM",title:"Board Member - Procurement",company:"Kimpur",email:"izi.mizrahi@kimpur.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Jin",initials:"J",title:"Director of Innovation, Packaging and Consumer Goods",company:"Allnex",email:"jin.lu@allnex.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:2}
-  ]},
-  {name:"Loïc Debergh",initials:"LD",title:"Project Director",company:"Arkema",email:"loic.debergh@arkema.com",note:"",status:"extended",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:1}
-  ]},
-  {name:"Mituki Kushimoto",initials:"MK",title:"Sales Associate Marketing & Sales Overseas Business",company:"Nitto Kasei Co,, Ltd",email:"mituki_kushimoto@nittokasei.co.jp",note:"",status:"extended",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Peter Csaszar",initials:"PC",title:"Senior Vice President Group Downstream Chemicals",company:"MOL",email:"pecsaszar@mol.hu",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
-  ]},
-  {name:"Sergiusz Stefanowski",initials:"SS",title:"Director Polyols Business Unit",company:"PCC Rokita",email:"sergiusz.stefanowski@pcc.eu",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Stefan Hornacek",initials:"SH",title:"Head of Group Polyol Business Unit",company:"MOL",email:"shornacek@mol.hu",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"S. Nad",initials:"SN",title:"",company:"Dow",email:"snad@dow.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"William Koonce",initials:"WK",title:"Global Product Manager Polyols (Technical)",company:"Dow",email:"wakoonce@dow.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Wojciech Wojcik",initials:"WW",title:"Group Polyol Sales and Marketing",company:"MOL",email:"wojciech.wojcik@mol.hu",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"W. Yu",initials:"WY",title:"",company:"Dow",email:"wyu@dow.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Hendrik Schuetz",initials:"HS",title:"Manager Business Development and Sales",company:"Thyssenkrupp",email:"hendrik.schuetz@thyssenkrupp.com",note:"",status:"extended",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:2,clicks:0}
-  ]},
-  {name:"Edis Kasemi",initials:"EK",title:"R&D Senior Scientist",company:"Sika",email:"kasemi.edis@ch.sika.com",note:"",status:"target",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Marcelle Moeller",initials:"MM",title:"Global Sustainability Director Dow Polyurethanes",company:"Dow",email:"mmoeller@dow.com",note:"Added individually -- Dow is n/a company-wide for Polyols, but her own title (Dow Polyurethanes) is a direct signal",status:"extended",engagements:[
-      {campaign_id:"polyols_jul",month:"2026-07",opens:1,clicks:0}
-  ]},
-  {name:"Joachim Lentz",initials:"JL",title:"Polymer Chemist",company:"Perstorp",email:"joachim.lentz@perstorp.com",note:"Added individually -- Perstorp is n/a company-wide for Polyols, but he downloaded polyols content and his LinkedIn title/focus (coatings, UV-curing chemistry) supports it",status:"extended",engagements:[
-      {campaign_id:"web_form",month:"2026-08",opens:0,clicks:0,web_form:true,date:"2026-08-18",source:"UTech SEAsia"}
   ]}
 ];
 
